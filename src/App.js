@@ -1,18 +1,17 @@
 import { useState, useEffect } from "react";
 import { formatTime } from "./utils";
 
-import "./App.css"
+import "./App.css";
 
 function App() {
   const [start, setStart] = useState(null);
   const [paused, setPaused] = useState(true);
   const [time, setTime] = useState(0);
-//   const [splitList, setSplitList] = useState([])
+  //   const [splitList, setSplitList] = useState([])
   const [splitList, setSplitList] = useState([
     {
-      index:0,
       time: 0,
-      label: "start",
+      label: "",
     },
   ]);
 
@@ -28,22 +27,25 @@ function App() {
     }
   }, [paused, start]);
 
-
   const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log(splitList)
-  }
+    e.preventDefault();
+    console.log(splitList);
+  };
 
   const startTimer = () => {
     setStart(Date.now() - time);
     setPaused((p) => !p);
-    if (!paused) splitTimer("pause")
+    if (!paused) splitTimer("pause");
   };
 
   const splitTimer = () => {
+    if (splitList.length === 1) {
+      setSplitList((split) => [{ time: 0, label: "start" }]);
+    }
     setSplitList((split) => [...split, { time, label: "split" }]);
-    // setSplitList((split) => console.log(split));
   };
+
+  // setSplitList((split) => console.log(split));
 
   const resetTimer = () => {
     setTime(0);
@@ -100,7 +102,19 @@ function App() {
       </div>
       {splitList.length > 0 && <hr />}
       <form onSubmit={handleSubmit}>
-        {splitList.map((x, index, splitList) => {
+        <div className="split-item">
+          <div>0</div>
+          <input
+            type="text"
+            className="label-input"
+            name="label"
+            value={splitList[0].label}
+            placeholder="start"
+            onChange={(e) => handleLabelChange(0, e)}
+          />
+          <div className="start">{formatTime(0)}</div>
+        </div>
+        {splitList.slice(1).map((x, index, splitList) => {
           const { time, label } = x;
           const interval = index > 0 ? time - splitList[index - 1].time : time;
 
@@ -119,7 +133,9 @@ function App() {
             </div>
           );
         })}
-        <button type="submit" onClick={handleSubmit}>export</button>
+        <button type="submit" onClick={handleSubmit}>
+          export
+        </button>
       </form>
     </div>
   );
