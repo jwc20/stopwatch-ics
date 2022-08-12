@@ -14,7 +14,7 @@ function App() {
   const [splitList, setSplitList] = useState([
     {
       time: 0,
-      label: "",
+      label: "start",
       currentDate: dateNow,
     },
   ]);
@@ -57,11 +57,16 @@ function App() {
   const resetTimer = () => {
     setTime(0);
     setPaused(true);
-    setSplitList([]);
+    setSplitList([
+      {
+        time: 0,
+        label: "start",
+        currentDate: dateNow,
+      },
+    ]);
   };
 
   const handleLabelChange = (index, e) => {
-    // e.preventDefault()
     const values = [...splitList];
     values[index][e.target.name] = e.target.value;
     setSplitList(values);
@@ -74,7 +79,6 @@ function App() {
     if (paused) return formatTime(last.time - last2nd.time);
     return formatTime(time - last.time);
   };
-
 
   const timerState = !paused ? "Pause" : "Start";
   const reset = time === 0;
@@ -108,7 +112,6 @@ function App() {
           Reset
         </button>
       </div>
-      <StartSplitList />
       {splitList.length > 0 && <hr />}
       <form onSubmit={handleSubmit}>
         {splitList.slice(0).map((x, index, splitList) => {
