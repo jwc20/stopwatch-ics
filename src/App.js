@@ -7,10 +7,12 @@ function App() {
   const [start, setStart] = useState(null);
   const [paused, setPaused] = useState(true);
   const [time, setTime] = useState(0);
+//   const [splitList, setSplitList] = useState([])
   const [splitList, setSplitList] = useState([
     {
+      index:0,
       time: 0,
-      label: "split",
+      label: "start",
     },
   ]);
 
@@ -26,14 +28,21 @@ function App() {
     }
   }, [paused, start]);
 
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    console.log(splitList)
+  }
+
   const startTimer = () => {
     setStart(Date.now() - time);
     setPaused((p) => !p);
-    // if (!paused) addSplitValue("pause")
+    if (!paused) splitTimer("pause")
   };
 
   const splitTimer = () => {
     setSplitList((split) => [...split, { time, label: "split" }]);
+    // setSplitList((split) => console.log(split));
   };
 
   const resetTimer = () => {
@@ -90,7 +99,7 @@ function App() {
         </button>
       </div>
       {splitList.length > 0 && <hr />}
-      <div>
+      <form onSubmit={handleSubmit}>
         {splitList.map((x, index, splitList) => {
           const { time, label } = x;
           const interval = index > 0 ? time - splitList[index - 1].time : time;
@@ -110,7 +119,8 @@ function App() {
             </div>
           );
         })}
-      </div>
+        <button type="submit" onClick={handleSubmit}>export</button>
+      </form>
     </div>
   );
 }
