@@ -106,7 +106,7 @@ function App() {
 
         <button
           className="reset"
-          disabled={reset || paused}
+          disabled={reset || !paused}
           onClick={resetTimer}
         >
           Reset
@@ -135,7 +135,9 @@ function App() {
             </div>
           );
         })}
-        <button type="submit" onClick={handleSubmit}>
+        <button type="submit"
+          disabled={reset || !paused}
+          onClick={handleSubmit}>
           export
         </button>
       </form>

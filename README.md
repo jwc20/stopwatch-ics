@@ -7,8 +7,8 @@
 
 ## TODO
 - [ ] Render current time and date in the splitList render.
-- [ ] disable reset button when the timer is running.
-- [ ] disable export button when the timer is running.
+- [x] disable reset button when the timer is running.
+- [x] disable export button when the timer is running.
 - [ ]
 
 
