@@ -47,16 +47,25 @@ function App() {
     setSplitList(values);
   };
 
+  const currentInterval = () => {
+    const { length, [length - 2]: last2nd, [length - 1]: last } = splitList;
+    if (reset) return "SPLIT TIME";
+    if (!last) return formatTime(time);
+    if (paused) return formatTime(last.time - last2nd.time);
+    return formatTime(time - last.time);
+  };
+
   const timerState = !paused ? "Pause" : "Start";
   const reset = time === 0;
+  const formattedTime = formatTime(time);
 
   return (
     <div className="App">
       <div className="display">
-        <span>{formatTime(time)}</span>
-        <span></span>
+        <span>{formatTime(time).slice(0, -2)}</span>
+        <span>{formatTime(time).slice(-2)}</span>
       </div>
-      <div className="split"></div>
+      <div className="split">{currentInterval()}</div>
       <div>
         <button className={paused ? "start" : "pause"} onClick={startTimer}>
           {timerState}
