@@ -3,6 +3,9 @@ import { formatTime } from "./utils";
 
 import "./App.css";
 
+const currentTime = Date.now();
+const dateNow = new Date(currentTime);
+
 function App() {
   const [start, setStart] = useState(null);
   const [paused, setPaused] = useState(true);
@@ -12,6 +15,7 @@ function App() {
     {
       time: 0,
       label: "",
+      currentDate: dateNow,
     },
   ]);
 
@@ -39,10 +43,13 @@ function App() {
   };
 
   const splitTimer = () => {
-    if (splitList.length === 1) {
-      setSplitList((split) => [{ time: 0, label: "start" }]);
-    }
-    setSplitList((split) => [...split, { time, label: "split" }]);
+    const currentTime = Date.now();
+    const dateNow = new Date(currentTime);
+    setSplitList((split) => [
+      ...split,
+      { time, label: "split", currentDate: dateNow },
+    ]);
+    console.log(dateNow);
   };
 
   // setSplitList((split) => console.log(split));
@@ -67,6 +74,7 @@ function App() {
     if (paused) return formatTime(last.time - last2nd.time);
     return formatTime(time - last.time);
   };
+
 
   const timerState = !paused ? "Pause" : "Start";
   const reset = time === 0;
@@ -100,21 +108,11 @@ function App() {
           Reset
         </button>
       </div>
+      <StartSplitList />
       {splitList.length > 0 && <hr />}
       <form onSubmit={handleSubmit}>
-        <div className="split-item">
-          <div>0</div>
-          <input
-            type="text"
-            className="label-input"
-            name="label"
-            value={splitList[0].label}
-            placeholder="start"
-            onChange={(e) => handleLabelChange(0, e)}
-          />
-          <div className="start">{formatTime(0)}</div>
-        </div>
-        {splitList.slice(1).map((x, index, splitList) => {
+        {splitList.slice(0).map((x, index, splitList) => {
+          // conditional here
           const { time, label } = x;
           const interval = index > 0 ? time - splitList[index - 1].time : time;
 
@@ -130,6 +128,7 @@ function App() {
                 onChange={(e) => handleLabelChange(index, e)}
               />
               <div className={label}>{formatTime(interval)}</div>
+              <div>{splitList.currentDate}</div>
             </div>
           );
         })}
