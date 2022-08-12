@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { formatTime } from "./utils";
 
+import "./App.css"
+
 function App() {
   const [start, setStart] = useState(null);
   const [paused, setPaused] = useState(true);
@@ -94,17 +96,17 @@ function App() {
           const interval = index > 0 ? time - splitList[index - 1].time : time;
 
           return (
-            <div key={time}>
+            <div className="split-item" key={time}>
               <div>{index + 1}</div>
-              <div className={label}>{formatTime(interval)}</div>
-              <div>{label}</div>
               <input
                 type="text"
                 className="label-input"
                 name="label"
                 value={splitList.label}
-                onChange={(e) => handleLabelChange}
+                placeholder="split"
+                onChange={(e) => handleLabelChange(index, e)}
               />
+              <div className={label}>{formatTime(interval)}</div>
             </div>
           );
         })}
