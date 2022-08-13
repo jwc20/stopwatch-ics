@@ -11,6 +11,9 @@
 - [x] disable reset button when the timer is running.
 - [x] disable export button when the timer is running.
 - [ ] change currentDate to timestamp
+
+- [ ] set coloumns
+  - # | Label | Interval | Total | Time Record
 - [ ] 
 
 
