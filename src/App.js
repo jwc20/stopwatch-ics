@@ -46,7 +46,7 @@ function App() {
     // const currentTime = Date.now();
     // const dateNow = new Date(currentTime).toString();
     // const dateNow = Date.now();
-    const dateNow = new Date()
+    const dateNow = new Date();
 
     setSplitList((split) => [
       ...split,
@@ -82,7 +82,6 @@ function App() {
     if (paused) return formatTime(last.time - last2nd.time);
     return formatTime(time - last.time);
   };
-
 
   const timerState = !paused ? "Pause" : "Start";
   const reset = time === 0;
@@ -121,7 +120,7 @@ function App() {
         {splitList.map((x, index) => {
           const { time, label, currentDate } = x;
           const interval = index > 0 ? time - splitList[index - 1].time : time;
-          const splitTimeStamp = splitList[index].currentDate
+          const splitTimeStamp = splitList[index].currentDate;
           // console.log(splitTimeStamp)
 
           // FIXME
@@ -129,28 +128,24 @@ function App() {
 
           return (
             <div key={time}>
-            {splitList.length === 1 ? (
-              <div></div>
-            ) : (
-
-            <div className="split-item">
-              <div>{index}</div>
-              <input
-                type="text"
-                className="label-input"
-                name="label"
-                value={splitList.label}
-                placeholder={index===0 ? "start" : "split"}
-                onChange={(e) => handleLabelChange(index, e)}
-              />
-              <div className={label}>{formatTime(interval)}</div>
-              <div className="split-date">{splitTimeStamp.toString()}</div>
-
+              {splitList.length === 1 ? (
+                <div></div>
+              ) : (
+                <div className="split-item">
+                  <div>{index}</div>
+                  <input
+                    type="text"
+                    className="label-input"
+                    name="label"
+                    value={splitList.label}
+                    placeholder={index === 0 ? "start" : "split"}
+                    onChange={(e) => handleLabelChange(index, e)}
+                  />
+                  <div className={label}>{formatTime(interval)}</div>
+                  <div className="split-date">{splitTimeStamp.toString()}</div>
+                </div>
+              )}
             </div>
-
-            ) }
-            </div>
-
           );
         })}
         <button
