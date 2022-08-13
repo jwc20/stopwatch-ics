@@ -1,7 +1,7 @@
 # stopwatch-ics
 
 ## FIXME 
-- [ ] The splitList render must be empty before starting.
+- [x] The splitList render must be empty before starting.
 - [ ] The splitTimer resets when pausing.
 - [ ]
 

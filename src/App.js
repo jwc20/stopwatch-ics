@@ -121,10 +121,6 @@ function App() {
           const { time, label, currentDate } = x;
           const interval = index > 0 ? time - splitList[index - 1].time : time;
           const splitTimeStamp = splitList[index].currentDate;
-          // console.log(splitTimeStamp)
-
-          // FIXME
-          // const currentTimeNow = Date.now();
 
           return (
             <div key={time}>
