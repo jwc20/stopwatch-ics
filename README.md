@@ -3,7 +3,6 @@
 ## FIXME 
 - [x] The splitList render must be empty before starting.
 - [ ] The splitTimer resets when pausing.
-- [ ]
 
 ## TODO
 - [x] Render current time and date in the splitList render.
@@ -11,10 +10,9 @@
 - [x] disable reset button when the timer is running.
 - [x] disable export button when the timer is running.
 - [ ] change currentDate to timestamp
-
 - [ ] set coloumns
-  - # | Label | Interval | Total | Time Record
-- [ ] 
+  - index | Label | Interval | Total | Time Record
+- [ ] delete button for time splits  
 
 
 
