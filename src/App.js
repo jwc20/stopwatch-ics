@@ -49,7 +49,6 @@ function App() {
       ...split,
       { time, label: "split", currentDate: dateNow },
     ]);
-    console.log(dateNow);
   };
 
   // setSplitList((split) => console.log(split));
@@ -57,6 +56,7 @@ function App() {
   const resetTimer = () => {
     setTime(0);
     setPaused(true);
+    // FIXME
     setSplitList([
       {
         time: 0,
@@ -114,10 +114,13 @@ function App() {
       </div>
       {splitList.length > 0 && <hr />}
       <form onSubmit={handleSubmit}>
-        {splitList.slice(0).map((x, index, splitList) => {
+        {splitList.map((x, index, splitList) => {
           // conditional here
           const { time, label } = x;
           const interval = index > 0 ? time - splitList[index - 1].time : time;
+
+          //FIXME
+          const currentTimeNow = Date.now();
 
           return (
             <div className="split-item" key={time}>
@@ -131,13 +134,16 @@ function App() {
                 onChange={(e) => handleLabelChange(index, e)}
               />
               <div className={label}>{formatTime(interval)}</div>
-              <div>{splitList.currentDate}</div>
+              <div className="current-date"></div>
+               <p>{new Date(currentTimeNow).toLocaleString()}</p>
             </div>
           );
         })}
-        <button type="submit"
+        <button
+          type="submit"
           disabled={reset || !paused}
-          onClick={handleSubmit}>
+          onClick={handleSubmit}
+        >
           export
         </button>
       </form>
