@@ -43,8 +43,11 @@ function App() {
   };
 
   const splitTimer = () => {
-    const currentTime = Date.now();
-    const dateNow = new Date(currentTime);
+    // const currentTime = Date.now();
+    // const dateNow = new Date(currentTime).toString();
+    // const dateNow = Date.now();
+    const dateNow = new Date()
+
     setSplitList((split) => [
       ...split,
       { time, label: "split", currentDate: dateNow },
@@ -80,6 +83,7 @@ function App() {
     return formatTime(time - last.time);
   };
 
+
   const timerState = !paused ? "Pause" : "Start";
   const reset = time === 0;
   const formattedTime = formatTime(time);
@@ -114,29 +118,39 @@ function App() {
       </div>
       {splitList.length > 0 && <hr />}
       <form onSubmit={handleSubmit}>
-        {splitList.map((x, index, splitList) => {
-          // conditional here
-          const { time, label } = x;
+        {splitList.map((x, index) => {
+          const { time, label, currentDate } = x;
           const interval = index > 0 ? time - splitList[index - 1].time : time;
+          const splitTimeStamp = splitList[index].currentDate
+          // console.log(splitTimeStamp)
 
-          //FIXME
-          const currentTimeNow = Date.now();
+          // FIXME
+          // const currentTimeNow = Date.now();
 
           return (
-            <div className="split-item" key={time}>
-              <div>{index + 1}</div>
+            <div key={time}>
+            {splitList.length === 1 ? (
+              <div></div>
+            ) : (
+
+            <div className="split-item">
+              <div>{index}</div>
               <input
                 type="text"
                 className="label-input"
                 name="label"
                 value={splitList.label}
-                placeholder="split"
+                placeholder={index===0 ? "start" : "split"}
                 onChange={(e) => handleLabelChange(index, e)}
               />
               <div className={label}>{formatTime(interval)}</div>
-              <div className="current-date"></div>
-               <p>{new Date(currentTimeNow).toLocaleString()}</p>
+              <div className="split-date">{splitTimeStamp.toString()}</div>
+
             </div>
+
+            ) }
+            </div>
+
           );
         })}
         <button
