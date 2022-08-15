@@ -13,10 +13,5 @@
       ~~- [x] disable export button when the timer is running.~~
 - [x] change currentDate to timestamp\
 ~~- [ ] set columns: index | Label | Interval | Total | Time Record~~
-- [ ] delete button for time splits
-
-- [ ] .
-- [ ] .
-- [ ] .
-- [ ] .
-- [ ] .
+- [x] delete button for time splits
+- [ ] Updating tab title
