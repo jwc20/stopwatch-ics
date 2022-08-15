@@ -22,3 +22,9 @@
 
 
 - [ ] implement caching 
+- [ ] really need refactoring
+
+
+## Tools
+- adamgibbons/ics
+- eligrey/FileSaver.js
