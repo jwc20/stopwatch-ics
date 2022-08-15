@@ -12,6 +12,7 @@ function App() {
   const [splitList, setSplitList] = useState([
     {
       time: 0,
+      interval: 0,
       label: "start",
       currentDate: timestamp,
     },
@@ -64,6 +65,7 @@ function App() {
     setSplitList([
       {
         time: 0,
+        interval: 0,
         label: "start",
         currentDate: timestamp,
       },
@@ -71,9 +73,9 @@ function App() {
   };
 
   const handleLabelChange = (index, e) => {
-    const values = [...splitList];
-    values[index][e.target.name] = e.target.value;
-    setSplitList(values);
+    const items = [...splitList];
+    items[index][e.target.name] = e.target.value;
+    setSplitList(items);
   };
 
   const handlePlaceholderChange = (index, label) => {
@@ -93,6 +95,13 @@ function App() {
     if (!last) return formatTime(time);
     if (paused) return formatTime(last.time - last2nd.time);
     return formatTime(time - last.time);
+  };
+
+  const handleRemoveSplit = (i, interval) => {
+    const items = [...splitList];
+    splitList[i - 1].interval += interval;
+    items.splice(i, 1);
+    setSplitList(items);
   };
 
   const timerState = !paused ? "Pause" : "Start";
@@ -142,25 +151,29 @@ function App() {
               {splitList.length === 1 ? (
                 <div></div>
               ) : (
-                  <div className="split-item">
-                    <div>{index === 0 ? "" : index}</div>
-                    <input
-                      type="text"
-                      className="label-input"
-                      name="label"
-                      value={splitList.label}
-                      placeholder={handlePlaceholderChange(
-                        index,
-                        splitList[index].label
-                      )}
-                      onChange={(e) => handleLabelChange(index, e)}
-                    />
-                    <div className={label}>{formatTime(interval)}</div>
-                    <div className="total-time">{formatTime(time)}</div>
-                    <div className="split-date">
-                      {splitTimeStamp.toString()}
-                    </div>
-                  </div>
+                <div className="split-item">
+                  <div>{index === 0 ? "" : index}</div>
+                  <input
+                    type="text"
+                    className="label-input"
+                    name="label"
+                    value={splitList.label}
+                    placeholder={handlePlaceholderChange(
+                      index,
+                      splitList[index].label
+                    )}
+                    onChange={(e) => handleLabelChange(index, e)}
+                  />
+                  <div className={label}>{formatTime(interval)}</div>
+                  <div className="total-time">{formatTime(time)}</div>
+                  <div className="split-date">{splitTimeStamp.toString()}</div>
+                  <button
+                    className={index === 0 ? "button-hidden" : "remove-button"}
+                    onClick={() => handleRemoveSplit(index, interval)}
+                  >
+                    X
+                  </button>
+                </div>
               )}
             </div>
           );
