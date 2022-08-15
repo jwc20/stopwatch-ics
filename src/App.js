@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { formatTime } from "./utils";
+import { saveAs } from "file-saver";
 
 import "./App.css";
 
-const timestamp = new Date(Date.now()).toString().slice(0, 24);
+// const timestamp = new Date(Date.now()).toString().slice(0, 24);
+const timestamp = new Date(Date.now());
 
 function App() {
   const [start, setStart] = useState(null);
@@ -46,8 +48,17 @@ function App() {
   const handleExportSubmit = (e) => {
     // export
     // need filename and data
+    // splitList = [{...}, {...}, {...}, {...}, ...]
+    
     e.preventDefault();
     console.log(splitList);
+
+
+    // let FileSaver = require("file-saver");
+    // let blob = new Blob(["Hello, world!"], {
+    //   type: 'text/calendar;charset=utf-8;',
+    // });
+    // FileSaver.saveAs(blob, "hello world.txt");
   };
 
   const startTimer = () => {
@@ -57,7 +68,8 @@ function App() {
   };
 
   const splitTimer = (label) => {
-    const timestamp = new Date(Date.now()).toString().slice(0, 24);
+    // const timestamp = new Date(Date.now()).toString().slice(0, 24);
+    const timestamp = new Date(Date.now());
 
     if (label === "pause") {
       // console.log(label)
@@ -179,7 +191,7 @@ function App() {
                   />
                   <div className={label}>{formatTime(interval)}</div>
                   <div className="total-time">{formatTime(time)}</div>
-                  <div className="split-date">{splitTimeStamp.toString()}</div>
+                  <div className="split-date">{splitTimeStamp.toString().slice(0, 24)}</div>
                   <button
                     className={index === 0 ? "button-hidden" : "remove-button"}
                     onClick={() => handleRemoveSplit(index, interval)}
