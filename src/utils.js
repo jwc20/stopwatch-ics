@@ -21,21 +21,16 @@ export const formatTime = (mSec) => {
 
 export const makeEvent = (splitItem) => {
   let time = splitItem.timestamp;
-
   let year = time.getFullYear();
   let month = time.getMonth() + 1;
   let day = time.getDate();
   let hour = time.getHours();
   let minute = time.getMinutes();
-
   let startDate = [year, month, day, hour, minute];
-  console.log(splitItem.interval);
-
-  let _interval = new Date(splitItem.interval)
-
-  let intervalHour = _interval.getUTCHours();
-  let intervalMinute = _interval.getUTCMinutes();
-  console.log(intervalHour, intervalMinute)
+  let splitInterval = new Date(splitItem.interval);
+  let intervalHour = splitInterval.getUTCHours();
+  let intervalMinute = splitInterval.getUTCMinutes();
+  let label = splitItem.label
 
   const event = {
     start: startDate,
@@ -43,16 +38,7 @@ export const makeEvent = (splitItem) => {
       hours: intervalHour,
       minutes: intervalMinute,
     },
-    title: "",
-    description: "",
-    location: "",
-    url: "",
-    geo: {},
-    categories: [],
-    status: "CONFIRMED",
-    busyStatus: "BUSY",
-    organizer: {},
-    attendees: [{}],
+    title: label,
   };
   return event;
 };
@@ -63,7 +49,6 @@ export const makeEvents = (events) => {
     console.log(error);
     return;
   }
-  // console.log(value);
   return value;
 };
 
