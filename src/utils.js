@@ -1,3 +1,5 @@
+const ics = require("ics");
+
 export const formatTime = (mSec) => {
   let timeElapsed = new Date(mSec);
   let hour = timeElapsed.getUTCHours();
@@ -16,37 +18,65 @@ export const formatTime = (mSec) => {
   );
 };
 
-export const makeEvent = () => {
-
-  let _summary = ""
-  let location = ""
-  let description = "" 
-  let _start = {
-    dateTime: "",
-    timeZone: "",
-  }
-  let _end = {
-    dateTime: "",
-    timeZone: "",
-  }
-  
-  // This follows the Google Calendar API format for events.
-  let event = {
-    summary: "Google I/O 2015",
-    location: "800 Howard St., San Francisco, CA 94103",
-    description: "A chance to hear more about Google's developer products.",
-    start: {
-      dateTime: "2015-05-28T09:00:00-07:00",
-      timeZone: "America/Los_Angeles",
-    },
-    end: {
-      dateTime: "2015-05-28T17:00:00-07:00",
-      timeZone: "America/Los_Angeles",
-    },
-    reminders: {
-      useDefault: false,
-    },
+const makeEvent = () => {
+  const event = {
+    start: [2018, 5, 30, 6, 30],
+    duration: { hours: 6, minutes: 30 },
+    title: "",
+    description: "",
+    location: "",
+    url: "",
+    geo: {},
+    categories: [],
+    status: "CONFIRMED",
+    busyStatus: "BUSY",
+    organizer: {},
+    attendees: [{}],
   };
-
   return event;
 };
+
+const makeEvents = (events) => {
+  const { error, value } = ics.createEvents(events);
+  if (error) {
+    console.log(error);
+    return;
+  }
+  // console.log(value);
+  return value;
+};
+
+
+// let events = [
+//   {
+//     start: [2018, 5, 30, 6, 30],
+//     duration: { hours: 6, minutes: 30 },
+//     title: "",
+//     description: "",
+//     location: "",
+//     url: "",
+//     geo: {},
+//     categories: [],
+//     status: "CONFIRMED",
+//     busyStatus: "BUSY",
+//     organizer: {},
+//     attendees: [{}],
+//   },
+//
+//   {
+//     start: [2019, 5, 30, 6, 30],
+//     duration: { hours: 6, minutes: 30 },
+//     title: "",
+//     description: "",
+//     location: "",
+//     url: "",
+//     geo: {},
+//     categories: [],
+//     status: "CONFIRMED",
+//     busyStatus: "BUSY",
+//     organizer: {},
+//     attendees: [{}],
+//   },
+// ];
+//
+// makeEvents(events);

@@ -53,7 +53,9 @@ function App() {
     // splitList = [{...}, {...}, {...}, {...}, ...]
 
     e.preventDefault();
-    console.log(splitList);
+    console.log(splitList.length);
+
+  
 
     // let FileSaver = require("file-saver");
     // let blob = new Blob(["Hello, world!"], {
