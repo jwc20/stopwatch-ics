@@ -1,3 +1,4 @@
+import { saveAs } from "file-saver";
 const ics = require("ics");
 
 export const formatTime = (mSec) => {
@@ -18,10 +19,30 @@ export const formatTime = (mSec) => {
   );
 };
 
-const makeEvent = () => {
+export const makeEvent = (splitItem) => {
+  let time = splitItem.timestamp;
+
+  let year = time.getFullYear();
+  let month = time.getMonth() + 1;
+  let day = time.getDate();
+  let hour = time.getHours();
+  let minute = time.getMinutes();
+
+  let startDate = [year, month, day, hour, minute];
+  console.log(splitItem.interval);
+
+  let _interval = new Date(splitItem.interval)
+
+  let intervalHour = _interval.getUTCHours();
+  let intervalMinute = _interval.getUTCMinutes();
+  console.log(intervalHour, intervalMinute)
+
   const event = {
-    start: [2018, 5, 30, 6, 30],
-    duration: { hours: 6, minutes: 30 },
+    start: startDate,
+    duration: {
+      hours: intervalHour,
+      minutes: intervalMinute,
+    },
     title: "",
     description: "",
     location: "",
@@ -36,7 +57,7 @@ const makeEvent = () => {
   return event;
 };
 
-const makeEvents = (events) => {
+export const makeEvents = (events) => {
   const { error, value } = ics.createEvents(events);
   if (error) {
     console.log(error);
@@ -46,37 +67,10 @@ const makeEvents = (events) => {
   return value;
 };
 
-
-// let events = [
-//   {
-//     start: [2018, 5, 30, 6, 30],
-//     duration: { hours: 6, minutes: 30 },
-//     title: "",
-//     description: "",
-//     location: "",
-//     url: "",
-//     geo: {},
-//     categories: [],
-//     status: "CONFIRMED",
-//     busyStatus: "BUSY",
-//     organizer: {},
-//     attendees: [{}],
-//   },
-//
-//   {
-//     start: [2019, 5, 30, 6, 30],
-//     duration: { hours: 6, minutes: 30 },
-//     title: "",
-//     description: "",
-//     location: "",
-//     url: "",
-//     geo: {},
-//     categories: [],
-//     status: "CONFIRMED",
-//     busyStatus: "BUSY",
-//     organizer: {},
-//     attendees: [{}],
-//   },
-// ];
-//
-// makeEvents(events);
+export const makeIcs = (eventsIcs) => {
+  let FileSaver = require("file-saver");
+  let blob = new Blob([eventsIcs], {
+    type: "text/calendar;charset=utf-8;",
+  });
+  FileSaver.saveAs(blob, "test.ics");
+};

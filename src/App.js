@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import { formatTime } from "./utils";
-import { saveAs } from "file-saver";
+import { formatTime, makeEvent, makeEvents, makeIcs } from "./utils";
 
 import "./App.css";
 
@@ -18,7 +17,7 @@ function App() {
       label: "start",
       time: 0,
       interval: 0,
-      currentDate: timestamp,
+      timestamp: timestamp,
     },
   ]);
 
@@ -27,7 +26,6 @@ function App() {
       let timer = setInterval(() => {
         setTime(() => {
           const delta = Date.now() - start;
-
           return delta;
         });
       }, 4);
@@ -53,15 +51,19 @@ function App() {
     // splitList = [{...}, {...}, {...}, {...}, ...]
 
     e.preventDefault();
-    console.log(splitList.length);
+    // console.log(splitList.length);
+    // console.log(splitList);
+    let eventList = [];
+    if (splitList.length > 1) {
+      for (let i = 0; i < splitList.length; i++) {
+        eventList.push(makeEvent(splitList[i]));
+      }
+      // makeEvents(eventList)
+      // console.log(makeEvents(eventList));
+      const icsText = makeEvents(eventList);
+      // makeIcs(icsText);
+    }
 
-  
-
-    // let FileSaver = require("file-saver");
-    // let blob = new Blob(["Hello, world!"], {
-    //   type: 'text/calendar;charset=utf-8;',
-    // });
-    // FileSaver.saveAs(blob, "hello world.txt");
   };
 
   const startTimer = () => {
@@ -83,7 +85,7 @@ function App() {
           label: "pause",
           time,
           interval: latestInterval,
-          currentDate: timestamp,
+          timestamp: timestamp,
         },
       ]);
     } else {
@@ -93,7 +95,7 @@ function App() {
           label: "pause",
           time,
           interval: latestInterval,
-          currentDate: timestamp,
+          timestamp: timestamp,
         },
       ]);
     }
@@ -107,7 +109,7 @@ function App() {
         time: 0,
         interval: 0,
         label: "start",
-        currentDate: timestamp,
+        timestamp: timestamp,
       },
     ]);
   };
@@ -181,9 +183,9 @@ function App() {
       {splitList.length > 0 && <hr />}
       <form onSubmit={handleExportSubmit}>
         {splitList.map((x, index) => {
-          const { time, label, currentDate } = x;
+          const { time, label, timestamp } = x;
           const interval = index > 0 ? time - splitList[index - 1].time : time;
-          const splitTimeStamp = splitList[index].currentDate;
+          const splitTimeStamp = splitList[index].timestamp;
           latestInterval = interval;
 
           return (
