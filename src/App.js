@@ -23,12 +23,25 @@ function App() {
       let timer = setInterval(() => {
         setTime(() => {
           const delta = Date.now() - start;
+
           return delta;
         });
       }, 4);
       return () => clearInterval(timer);
     }
   }, [paused, start]);
+
+  useEffect(() => {
+    if (time === 0) {
+      document.title = "Stopwatch";
+    } else {
+      document.title =
+        currentInterval() +
+        "/" +
+        formatTime(time).slice(0, -2) +
+        formatTime(time).slice(-2);
+    }
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -61,7 +74,6 @@ function App() {
   const resetTimer = () => {
     setTime(0);
     setPaused(true);
-    // FIXME
     setSplitList([
       {
         time: 0,
@@ -79,7 +91,6 @@ function App() {
   };
 
   const handlePlaceholderChange = (index, label) => {
-    // not sure if I should do it like this
     if (index === 0) {
       return "start";
     } else if (label === "pause") {
