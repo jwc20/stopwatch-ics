@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
-import { formatTime, formatTimestamp } from "./utils";
+import { formatTime, makeEvent, makeEvents, makeIcs } from "./utils";
 
 import "./App.css";
 
-const timestamp = new Date(Date.now()).toString().slice(0, 24);
+// const timestamp = new Date(Date.now()).toString().slice(0, 24);
+const timestamp = new Date(Date.now());
+
+let latestInterval = 0;
 
 function App() {
   const [start, setStart] = useState(null);
@@ -11,10 +14,10 @@ function App() {
   const [time, setTime] = useState(0);
   const [splitList, setSplitList] = useState([
     {
+      label: "start",
       time: 0,
       interval: 0,
-      label: "start",
-      currentDate: timestamp,
+      timestamp: timestamp,
     },
   ]);
 
@@ -23,7 +26,6 @@ function App() {
       let timer = setInterval(() => {
         setTime(() => {
           const delta = Date.now() - start;
-
           return delta;
         });
       }, 4);
@@ -43,9 +45,24 @@ function App() {
     }
   });
 
-  const handleSubmit = (e) => {
+  const handleExportSubmit = (e) => {
+    // export
+    // need filename and data
+    // splitList = [{...}, {...}, {...}, {...}, ...]
+
     e.preventDefault();
-    console.log(splitList);
+    // console.log(splitList.length);
+    // console.log(splitList);
+    let eventList = [];
+    if (splitList.length > 1) {
+      for (let i = 0; i < splitList.length; i++) {
+        eventList.push(makeEvent(splitList[i]));
+      }
+      // makeEvents(eventList)
+      // console.log(makeEvents(eventList));
+      const icsText = makeEvents(eventList);
+      makeIcs(icsText);
+    }
   };
 
   const startTimer = () => {
@@ -54,19 +71,31 @@ function App() {
     if (!paused) splitTimer("pause");
   };
 
-  const splitTimer = (label) => {
-    const timestamp = new Date(Date.now()).toString().slice(0, 24);
+  const splitTimer = (splitLabel, interval) => {
+    // const timestamp = new Date(Date.now()).toString().slice(0, 24);
+    const timestamp = new Date(Date.now());
+    // console.log(splitList[splitList.length - 1].interval);
 
-    if (label === "pause") {
+    if (splitLabel === "pause") {
       // console.log(label)
       setSplitList((split) => [
         ...split,
-        { time, label: "pause", currentDate: timestamp },
+        {
+          label: "pause",
+          time,
+          interval: latestInterval,
+          timestamp: timestamp,
+        },
       ]);
     } else {
       setSplitList((split) => [
         ...split,
-        { time, label: "split", currentDate: timestamp },
+        {
+          label: "split",
+          time,
+          interval: latestInterval,
+          timestamp: timestamp,
+        },
       ]);
     }
   };
@@ -79,7 +108,7 @@ function App() {
         time: 0,
         interval: 0,
         label: "start",
-        currentDate: timestamp,
+        timestamp: timestamp,
       },
     ]);
   };
@@ -151,11 +180,12 @@ function App() {
         </button>
       </div>
       {splitList.length > 0 && <hr />}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleExportSubmit}>
         {splitList.map((x, index) => {
-          const { time, label, currentDate } = x;
+          const { time, label, timestamp } = x;
           const interval = index > 0 ? time - splitList[index - 1].time : time;
-          const splitTimeStamp = splitList[index].currentDate;
+          const splitTimeStamp = splitList[index].timestamp;
+          latestInterval = interval;
 
           return (
             <div key={time}>
@@ -177,7 +207,9 @@ function App() {
                   />
                   <div className={label}>{formatTime(interval)}</div>
                   <div className="total-time">{formatTime(time)}</div>
-                  <div className="split-date">{splitTimeStamp.toString()}</div>
+                  <div className="split-date">
+                    {splitTimeStamp.toString().slice(0, 24)}
+                  </div>
                   <button
                     className={index === 0 ? "button-hidden" : "remove-button"}
                     onClick={() => handleRemoveSplit(index, interval)}
@@ -189,7 +221,11 @@ function App() {
             </div>
           );
         })}
-        <button type="submit" disabled={reset} onClick={handleSubmit}>
+        <button
+          type="submit-button"
+          disabled={reset}
+          onClick={handleExportSubmit}
+        >
           export
         </button>
       </form>
