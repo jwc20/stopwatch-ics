@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { formatTime, formatTimestamp } from "./utils";
+import { formatTime } from "./utils";
 
 import "./App.css";
 
@@ -43,7 +43,9 @@ function App() {
     }
   });
 
-  const handleSubmit = (e) => {
+  const handleExportSubmit = (e) => {
+    // export
+    // need filename and data
     e.preventDefault();
     console.log(splitList);
   };
@@ -151,7 +153,7 @@ function App() {
         </button>
       </div>
       {splitList.length > 0 && <hr />}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleExportSubmit}>
         {splitList.map((x, index) => {
           const { time, label, currentDate } = x;
           const interval = index > 0 ? time - splitList[index - 1].time : time;
@@ -189,7 +191,11 @@ function App() {
             </div>
           );
         })}
-        <button type="submit" disabled={reset} onClick={handleSubmit}>
+        <button
+          type="submit-button"
+          disabled={reset}
+          onClick={handleExportSubmit}
+        >
           export
         </button>
       </form>
