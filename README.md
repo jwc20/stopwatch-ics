@@ -14,4 +14,4 @@
 - [x] change currentDate to timestamp\
 ~~- [ ] set columns: index | Label | Interval | Total | Time Record~~
 - [x] delete button for time splits
-- [ ] Updating tab title
+- [x] Updating window title
