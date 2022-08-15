@@ -102,10 +102,13 @@ function App() {
   return (
     <div className="App">
       <div className="display">
-        <span>{formatTime(time).slice(0, -2)}</span>
-        <span>{formatTime(time).slice(-2)}</span>
+        <div className="timer-display">
+          <span>{formatTime(time).slice(0, -2)}</span>
+          <span>{formatTime(time).slice(-2)}</span>
+        </div>
+        <div className="split-timer-display">{currentInterval()}</div>
       </div>
-      <div className="split">{currentInterval()}</div>
+
       <div>
         <button className={paused ? "start" : "pause"} onClick={startTimer}>
           {timerState}
