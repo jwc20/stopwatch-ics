@@ -63,7 +63,6 @@ function App() {
       const icsText = makeEvents(eventList);
       makeIcs(icsText);
     }
-
   };
 
   const startTimer = () => {
