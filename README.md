@@ -5,6 +5,7 @@
 - [x] The splitList render must be empty before starting.\
       ~~- [ ] The splitTimer resets when pausing.~~
 - [ ] Make splitList into a table
+- [ ] Data disappears when removing the last element in the splitList.
 
 ## TODO
 
@@ -16,7 +17,8 @@
 ~~- [ ] set columns: index | Label | Interval | Total | Time Record~~
 - [x] delete button for time splits
 - [x] Updating window title
+- [x] Export to .ics file
+- [x] Add edit button to edit description(for calendar events)
 
-- [ ] Export to .ics file
-- [ ] Add edit button to edit description(for calendar events)
+
 - [ ] implement caching 
