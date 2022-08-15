@@ -21,6 +21,18 @@ function App() {
     },
   ]);
 
+  /*
+  useEffect(() => {
+    setSplitList(JSON.stringify(window.localStorage.getItem("splitList")));
+    console.log(splitList);
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("splitList", splitList);
+  }, [splitList]);
+  JSON.parse(JSON.stringify(splitList));
+  */
+
   useEffect(() => {
     if (!paused) {
       let timer = setInterval(() => {
