@@ -142,22 +142,25 @@ function App() {
               {splitList.length === 1 ? (
                 <div></div>
               ) : (
-                <div className="split-item">
-                  <div>{index}</div>
-                  <input
-                    type="text"
-                    className="label-input"
-                    name="label"
-                    value={splitList.label}
-                    placeholder={handlePlaceholderChange(
-                      index,
-                      splitList[index].label
-                    )}
-                    onChange={(e) => handleLabelChange(index, e)}
-                  />
-                  <div className={label}>{formatTime(interval)}</div>
-                  <div className="split-date">{splitTimeStamp.toString()}</div>
-                </div>
+                  <div className="split-item">
+                    <div>{index === 0 ? "" : index}</div>
+                    <input
+                      type="text"
+                      className="label-input"
+                      name="label"
+                      value={splitList.label}
+                      placeholder={handlePlaceholderChange(
+                        index,
+                        splitList[index].label
+                      )}
+                      onChange={(e) => handleLabelChange(index, e)}
+                    />
+                    <div className={label}>{formatTime(interval)}</div>
+                    <div className="total-time">{formatTime(time)}</div>
+                    <div className="split-date">
+                      {splitTimeStamp.toString()}
+                    </div>
+                  </div>
               )}
             </div>
           );

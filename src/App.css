@@ -61,3 +61,15 @@
   padding-top: 30px;
   padding-bottom: 10px;
 }
+
+.total-time {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.list-title{
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+
+}
