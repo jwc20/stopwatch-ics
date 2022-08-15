@@ -61,7 +61,7 @@ function App() {
       // makeEvents(eventList)
       // console.log(makeEvents(eventList));
       const icsText = makeEvents(eventList);
-      // makeIcs(icsText);
+      makeIcs(icsText);
     }
 
   };
@@ -92,7 +92,7 @@ function App() {
       setSplitList((split) => [
         ...split,
         {
-          label: "pause",
+          label: "split",
           time,
           interval: latestInterval,
           timestamp: timestamp,
