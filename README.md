@@ -15,3 +15,5 @@
 ~~- [ ] set columns: index | Label | Interval | Total | Time Record~~
 - [x] delete button for time splits
 - [x] Updating window title
+
+- [ ] Export to .ics file
