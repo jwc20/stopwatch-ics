@@ -7,15 +7,17 @@ import "./App.css";
 // const timestamp = new Date(Date.now()).toString().slice(0, 24);
 const timestamp = new Date(Date.now());
 
+let latestInterval = 0;
+
 function App() {
   const [start, setStart] = useState(null);
   const [paused, setPaused] = useState(true);
   const [time, setTime] = useState(0);
   const [splitList, setSplitList] = useState([
     {
+      label: "start",
       time: 0,
       interval: 0,
-      label: "start",
       currentDate: timestamp,
     },
   ]);
@@ -49,10 +51,9 @@ function App() {
     // export
     // need filename and data
     // splitList = [{...}, {...}, {...}, {...}, ...]
-    
+
     e.preventDefault();
     console.log(splitList);
-
 
     // let FileSaver = require("file-saver");
     // let blob = new Blob(["Hello, world!"], {
@@ -67,20 +68,31 @@ function App() {
     if (!paused) splitTimer("pause");
   };
 
-  const splitTimer = (label) => {
+  const splitTimer = (splitLabel, interval) => {
     // const timestamp = new Date(Date.now()).toString().slice(0, 24);
     const timestamp = new Date(Date.now());
+    // console.log(splitList[splitList.length - 1].interval);
 
-    if (label === "pause") {
+    if (splitLabel === "pause") {
       // console.log(label)
       setSplitList((split) => [
         ...split,
-        { time, label: "pause", currentDate: timestamp },
+        {
+          label: "pause",
+          time,
+          interval: latestInterval,
+          currentDate: timestamp,
+        },
       ]);
     } else {
       setSplitList((split) => [
         ...split,
-        { time, label: "split", currentDate: timestamp },
+        {
+          label: "pause",
+          time,
+          interval: latestInterval,
+          currentDate: timestamp,
+        },
       ]);
     }
   };
@@ -170,6 +182,7 @@ function App() {
           const { time, label, currentDate } = x;
           const interval = index > 0 ? time - splitList[index - 1].time : time;
           const splitTimeStamp = splitList[index].currentDate;
+          latestInterval = interval;
 
           return (
             <div key={time}>
@@ -191,7 +204,9 @@ function App() {
                   />
                   <div className={label}>{formatTime(interval)}</div>
                   <div className="total-time">{formatTime(time)}</div>
-                  <div className="split-date">{splitTimeStamp.toString().slice(0, 24)}</div>
+                  <div className="split-date">
+                    {splitTimeStamp.toString().slice(0, 24)}
+                  </div>
                   <button
                     className={index === 0 ? "button-hidden" : "remove-button"}
                     onClick={() => handleRemoveSplit(index, interval)}
