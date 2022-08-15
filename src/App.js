@@ -10,7 +10,6 @@ function App() {
   const [start, setStart] = useState(null);
   const [paused, setPaused] = useState(true);
   const [time, setTime] = useState(0);
-  //   const [splitList, setSplitList] = useState([])
   const [splitList, setSplitList] = useState([
     {
       time: 0,
@@ -42,19 +41,22 @@ function App() {
     if (!paused) splitTimer("pause");
   };
 
-  const splitTimer = () => {
-    // const currentTime = Date.now();
-    // const dateNow = new Date(currentTime).toString();
-    // const dateNow = Date.now();
+  const splitTimer = (label) => {
     const dateNow = new Date();
 
-    setSplitList((split) => [
-      ...split,
-      { time, label: "split", currentDate: dateNow },
-    ]);
+    if (label === "pause") {
+      // console.log(label)
+      setSplitList((split) => [
+        ...split,
+        { time, label: "pause", currentDate: dateNow },
+      ]);
+    } else {
+      setSplitList((split) => [
+        ...split,
+        { time, label: "split", currentDate: dateNow },
+      ]);
+    }
   };
-
-  // setSplitList((split) => console.log(split));
 
   const resetTimer = () => {
     setTime(0);
@@ -74,6 +76,17 @@ function App() {
     values[index][e.target.name] = e.target.value;
     setSplitList(values);
   };
+
+  const handlePlaceholderChange = (index, label) => {
+    // not sure if I should do it like this
+    if (index === 0) {
+      return "start";
+    } else if (label === "pause") {
+      return "pause";
+    } else {
+      return "split";
+    }
+  }
 
   const currentInterval = () => {
     const { length, [length - 2]: last2nd, [length - 1]: last } = splitList;
@@ -134,7 +147,7 @@ function App() {
                     className="label-input"
                     name="label"
                     value={splitList.label}
-                    placeholder={index === 0 ? "start" : "split"}
+                    placeholder={handlePlaceholderChange(index, splitList[index].label)}
                     onChange={(e) => handleLabelChange(index, e)}
                   />
                   <div className={label}>{formatTime(interval)}</div>
@@ -146,7 +159,7 @@ function App() {
         })}
         <button
           type="submit"
-          disabled={reset || !paused}
+          disabled={reset || paused}
           onClick={handleSubmit}
         >
           export
