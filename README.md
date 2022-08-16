@@ -7,7 +7,8 @@
 - [x] The splitList render must be empty before starting.\
       ~~- [ ] The splitTimer resets when pausing.~~
 - [ ] Make splitList into a table
-- [ ] Data disappears when removing the last element in the splitList.
+- [x] Data disappears when removing the last element in the splitList.
+- [ ] Dont export start (first element) of the splitList(?)
 
 ## TODO
 
