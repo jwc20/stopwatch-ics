@@ -8,7 +8,12 @@ let latestInterval = 0;
 function App() {
   const [start, setStart] = useState(null);
   const [paused, setPaused] = useState(true);
-  const [time, setTime] = useState(0);
+  // const [time, setTime] = useState(0);
+  const [time, setTime] = useState(() => {
+    const saved = localStorage.getItem("time");
+    const initialValue = JSON.parse(saved);
+    return initialValue || 0;
+  });
   const [splitList, setSplitList] = useState([
     {
       label: "start",
@@ -17,6 +22,21 @@ function App() {
       timestamp: timestamp,
     },
   ]);
+
+  useEffect(() => {
+    // const time = JSON.parse(localStorage.getItem("time"));
+    const splitList = JSON.parse(localStorage.getItem("splitList"));
+    // if (time) setTime(time);
+    if (splitList) setSplitList(splitList);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("time", JSON.stringify(time));
+  },[time])
+
+  useEffect(() => {
+    localStorage.setItem("splitList", JSON.stringify(splitList));
+  }, [splitList]);
 
   useEffect(() => {
     if (!paused) {
@@ -121,7 +141,7 @@ function App() {
     const { length, [length - 2]: last2nd, [length - 1]: last } = splitList;
     if (reset) return "SPLIT TIME";
     if (!last) return formatTime(time);
-    if (paused) return formatTime(last.time - last2nd.time);
+    //if (paused) return formatTime(last.time - last2nd.time);
     return formatTime(time - last.time);
   };
 
@@ -131,16 +151,6 @@ function App() {
     items.splice(i, 1);
     setSplitList(items);
   };
-
-  useEffect(() => {
-    const splitList = JSON.parse(localStorage.getItem("splitList"));
-    if (splitList) setSplitList(splitList);
-    console.log(splitList);
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("splitList", JSON.stringify(splitList));
-  }, [splitList]);
 
   const timerState = !paused ? "Pause" : "Start";
   const reset = time === 0;
