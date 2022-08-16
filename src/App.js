@@ -31,6 +31,7 @@ function App() {
       }, 4);
       return () => clearInterval(timer);
     }
+
   }, [paused, start]);
 
   useEffect(() => {
