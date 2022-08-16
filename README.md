@@ -28,6 +28,10 @@
 - [ ] add svg block visuals
 - [ ] really need refactoring
 
+
+## Note
+- For all calendars (Google Calendar, Apple/Microsoft Calendar), each events that are less than or equal to 1 minute appear as 30 minute block.
+
 ## Tools
 
 - adamgibbons/ics
