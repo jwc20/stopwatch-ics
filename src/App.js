@@ -1,11 +1,8 @@
 import { useState, useEffect } from "react";
 import { formatTime, makeEvent, makeEvents, makeIcs } from "./utils";
-
 import "./App.css";
 
-// const timestamp = new Date(Date.now()).toString().slice(0, 24);
 const timestamp = new Date(Date.now());
-
 let latestInterval = 0;
 
 function App() {
@@ -16,7 +13,7 @@ function App() {
     {
       label: "start",
       time: 0,
-      interval: 0,
+      interval: latestInterval,
       timestamp: timestamp,
     },
   ]);
@@ -31,7 +28,6 @@ function App() {
       }, 4);
       return () => clearInterval(timer);
     }
-
   }, [paused, start]);
 
   useEffect(() => {
@@ -46,6 +42,13 @@ function App() {
     }
   });
 
+  useEffect(() => {
+    window.onbeforeunload = confirmExit;
+    function confirmExit() {
+      return "show warning";
+    }
+  }, []);
+
   const handleExportSubmit = (e) => {
     e.preventDefault();
     let eventList = [];
@@ -54,7 +57,7 @@ function App() {
         eventList.push(makeEvent(splitList[i]));
       }
       const icsText = makeEvents(eventList);
-      makeIcs(icsText);
+      makeIcs(icsText, splitList[0].timestamp);
     }
   };
 
@@ -64,7 +67,7 @@ function App() {
     if (!paused) splitTimer("pause");
   };
 
-  const splitTimer = (splitLabel, interval) => {
+  const splitTimer = (splitLabel) => {
     const timestamp = new Date(Date.now());
     if (splitLabel === "pause") {
       setSplitList((split) => [
@@ -109,13 +112,9 @@ function App() {
   };
 
   const handlePlaceholderChange = (index, label) => {
-    if (index === 0) {
-      return "start";
-    } else if (label === "pause") {
-      return "pause";
-    } else {
-      return "split";
-    }
+    if (index === 0) return "start";
+    else if (label === "pause") return "pause";
+    else return "split";
   };
 
   const currentInterval = () => {
@@ -147,7 +146,7 @@ function App() {
         <div className="split-timer-display">{currentInterval()}</div>
       </div>
 
-      <div>
+      <div className="split-list">
         <button className={paused ? "start" : "pause"} onClick={startTimer}>
           {timerState}
         </button>

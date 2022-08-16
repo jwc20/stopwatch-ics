@@ -19,7 +19,21 @@ export const formatTime = (mSec) => {
   );
 };
 
+const formatTimeHour = (mSec) => {
+  let timeElapsed = new Date(mSec);
+  let hour = timeElapsed.getUTCHours();
+  return hour;
+};
+
+const formatTimeMinute = (mSec) => {
+  let timeElapsed = new Date(mSec);
+  let min = timeElapsed.getUTCMinutes();
+  if (min < 1) min = 1;
+  return min;
+};
+
 export const makeEvent = (splitItem) => {
+  // variables for start
   let time = splitItem.timestamp;
   let year = time.getFullYear();
   let month = time.getMonth() + 1;
@@ -27,10 +41,13 @@ export const makeEvent = (splitItem) => {
   let hour = time.getHours();
   let minute = time.getMinutes();
   let startDate = [year, month, day, hour, minute];
-  let splitInterval = new Date(splitItem.interval);
-  let intervalHour = splitInterval.getUTCHours();
-  let intervalMinute = splitInterval.getUTCMinutes();
-  let label = splitItem.label
+
+  // variables for duration
+  let intervalHour = formatTimeHour(splitItem.interval);
+  let intervalMinute = formatTimeMinute(splitItem.interval);
+
+  // variable for title
+  let label = splitItem.label;
 
   const event = {
     start: startDate,
@@ -52,10 +69,11 @@ export const makeEvents = (events) => {
   return value;
 };
 
-export const makeIcs = (eventsIcs) => {
+export const makeIcs = (eventsIcs, date) => {
+  let filename = date.toString().split(" ", 4).join("_");
   let FileSaver = require("file-saver");
   let blob = new Blob([eventsIcs], {
     type: "text/calendar;charset=utf-8;",
   });
-  FileSaver.saveAs(blob, "test.ics");
+  FileSaver.saveAs(blob, filename + ".ics");
 };
