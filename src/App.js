@@ -5,6 +5,13 @@ import "./App.css";
 const timestamp = new Date(Date.now());
 let latestInterval = 0;
 
+const initialSplitList = {
+  label: "start",
+  time: 0,
+  interval: latestInterval,
+  timestamp: timestamp,
+};
+
 function App() {
   const [start, setStart] = useState(null);
   const [paused, setPaused] = useState(true);
@@ -14,25 +21,24 @@ function App() {
     const initialValue = JSON.parse(saved);
     return initialValue || 0;
   });
-  const [splitList, setSplitList] = useState([
-    {
-      label: "start",
-      time: 0,
-      interval: latestInterval,
-      timestamp: timestamp,
-    },
-  ]);
+  const [splitList, setSplitList] = useState(() => {
+    const saved = localStorage.getItem("splitList");
+    const initialValue = JSON.parse(saved);
+    return initialValue || initialSplitList;
+  });
 
+  /*
   useEffect(() => {
     // const time = JSON.parse(localStorage.getItem("time"));
     const splitList = JSON.parse(localStorage.getItem("splitList"));
     // if (time) setTime(time);
     if (splitList) setSplitList(splitList);
   }, []);
+  */
 
   useEffect(() => {
     localStorage.setItem("time", JSON.stringify(time));
-  },[time])
+  }, [time]);
 
   useEffect(() => {
     localStorage.setItem("splitList", JSON.stringify(splitList));
