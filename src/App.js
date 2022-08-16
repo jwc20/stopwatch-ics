@@ -15,7 +15,12 @@ const initialSplitList = {
 };
 
 function App() {
-  const [start, setStart] = useState(null);
+  // const [start, setStart] = useState(null);
+  const [start, setStart] = useState(() => {
+    const saved = localStorage.getItem("start");
+    const initialValue = JSON.parse(saved);
+    return initialValue || null;
+  });
   const [paused, setPaused] = useState(true);
   // const [time, setTime] = useState(0);
   const [time, setTime] = useState(() => {
@@ -46,16 +51,10 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem("time", JSON.stringify(time));
-  }, [time]);
-
-  useEffect(() => {
     localStorage.setItem("splitList", JSON.stringify(splitList));
-    // console.log(splitList)
-  }, [splitList]);
+  }, [time, splitList]);
 
   useEffect(() => {
-    let tempTime = localStorage.getItem("time");
-    console.log(typeof tempTime);
     if (!paused) {
       let timer = setInterval(() => {
         setTime(() => {
