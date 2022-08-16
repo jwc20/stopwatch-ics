@@ -10,6 +10,7 @@
 - [ ] Make splitList into a table
       ~~- [ ] Dont export start (first element) of the splitList(?)~~
 - [x] Events uses predecessor interval time as duration.
+- [ ] want to continue counting timer and interval timer to reset to 0 when stopped or refreshed.
 
 ## TODO
 
@@ -25,12 +26,11 @@
 - [x] Add edit button to edit description(for calendar events)
 
 - [/] implement caching
+
   - Need to store time and splitList
   - Maybe just the splitList and the time of the last element in the array.
   - Because of stringify, it's probably better to store timestamps as strings before caching.
-  - Kinda buggy
-- [ ] continue counting timer when stopped or refreshed and interval timer to reset to 0.
-
+  - Might be buggy
 
 - [ ] add svg block visuals
 - [ ] really need refactoring
