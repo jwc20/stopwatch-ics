@@ -2,21 +2,35 @@ import { useState, useEffect } from "react";
 import { formatTime, makeEvent, makeEvents, makeIcs } from "./utils";
 import "./App.css";
 
-const timestamp = new Date(Date.now());
+const timestamp = new Date(Date.now()).toString().slice(0, 24);
+
 let latestInterval = 0;
+
+const initialSplitList = {
+  label: "start",
+  time: 0,
+  interval: latestInterval,
+  timestamp: timestamp,
+};
 
 function App() {
   const [start, setStart] = useState(null);
   const [paused, setPaused] = useState(true);
-  const [time, setTime] = useState(0);
-  const [splitList, setSplitList] = useState([
-    {
-      label: "start",
-      time: 0,
-      interval: latestInterval,
-      timestamp: timestamp,
-    },
-  ]);
+  const [time, setTime] = useState(() => {
+    const saved = localStorage.getItem("time");
+    const initialValue = JSON.parse(saved);
+    return initialValue || 0;
+  });
+  const [splitList, setSplitList] = useState(() => {
+    const saved = localStorage.getItem("splitList");
+    const initialValue = JSON.parse(saved);
+    return initialValue || [initialSplitList];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("time", JSON.stringify(time));
+    localStorage.setItem("splitList", JSON.stringify(splitList));
+  }, [time, splitList]);
 
   useEffect(() => {
     if (!paused) {
@@ -57,6 +71,7 @@ function App() {
         eventList.push(makeEvent(splitList[i]));
       }
       const icsText = makeEvents(eventList);
+
       makeIcs(icsText, splitList[0].timestamp);
     }
   };
@@ -68,7 +83,7 @@ function App() {
   };
 
   const splitTimer = (splitLabel) => {
-    const timestamp = new Date(Date.now());
+    const timestamp = new Date(Date.now()).toString().slice(0, 24);
     if (splitLabel === "pause") {
       setSplitList((split) => [
         ...split,
@@ -95,14 +110,7 @@ function App() {
   const resetTimer = () => {
     setTime(0);
     setPaused(true);
-    setSplitList([
-      {
-        time: 0,
-        interval: 0,
-        label: "start",
-        timestamp: timestamp,
-      },
-    ]);
+    setSplitList([initialSplitList]);
   };
 
   const handleLabelChange = (index, e) => {
@@ -132,9 +140,7 @@ function App() {
     setSplitList(items);
   };
 
-  const timerState = !paused ? "Pause" : "Start";
   const reset = time === 0;
-  const formattedTime = formatTime(time);
 
   return (
     <div className="App">
@@ -148,7 +154,7 @@ function App() {
 
       <div className="split-list">
         <button className={paused ? "start" : "pause"} onClick={startTimer}>
-          {timerState}
+          {!paused ? "Pause" : "Start"}
         </button>
 
         <button
@@ -170,11 +176,10 @@ function App() {
       {splitList.length > 0 && <hr />}
       <form onSubmit={handleExportSubmit}>
         {splitList.map((x, index) => {
-          const { time, label, timestamp } = x;
+          const { time, label } = x;
           const interval = index > 0 ? time - splitList[index - 1].time : time;
           const splitTimeStamp = splitList[index].timestamp;
           latestInterval = interval;
-
           return (
             <div key={time}>
               {splitList.length === 1 ? (
@@ -195,9 +200,7 @@ function App() {
                   />
                   <div className={label}>{formatTime(interval)}</div>
                   <div className="total-time">{formatTime(time)}</div>
-                  <div className="split-date">
-                    {splitTimeStamp.toString().slice(0, 24)}
-                  </div>
+                  <div className="split-date">{splitTimeStamp}</div>
                   <button
                     className={index === 0 ? "button-hidden" : "remove-button"}
                     disabled={index === splitList.length - 1}
