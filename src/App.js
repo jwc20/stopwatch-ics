@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { formatTime, makeEvent, makeEvents, makeIcs } from "./utils";
 import "./App.css";
 
-const timestampMachine = new Date(Date.now());
-const timestamp = timestampMachine.toString().slice(0, 24);
+// const timestampMachine = new Date(Date.now());
+const timestamp = new Date(Date.now()).toString().slice(0, 24);
 
 let latestInterval = 0;
 
@@ -12,7 +12,6 @@ const initialSplitList = {
     time: 0,
     interval: latestInterval,
     timestamp: timestamp,
-    timestampMachine: timestampMachine,
 };
 
 function App() {
@@ -26,25 +25,10 @@ function App() {
     });
     const [splitList, setSplitList] = useState(() => {
         const saved = localStorage.getItem("splitList");
-        if (saved) {
-            const initialValue = JSON.parse(saved);
-            // console.log(initialValue)
-            // console.log(typeof initialValue[0].timestampMachine)
-            for(let i = 0; i < initialValue.length-1; i++){
-                if (typeof initialValue[i].timestampMachine === "string") {
-                    initialValue[i] = new Date(JSON.parse(initialValue[i].timestampMachine))
-                }
-                if (typeof initialValue.interval === "string") {
-                    initialValue[i] = parseInt(initialValue[i].interval)
-                }
-            }
-            console.log([initialValue])
-            return [initialValue];
-        }
-        return [initialSplitList];
+        const initialValue = JSON.parse(saved);
+        return initialValue || [initialSplitList];
     });
 
-    
     /*
   useEffect(() => {
     // const time = JSON.parse(localStorage.getItem("time"));
@@ -53,7 +37,7 @@ function App() {
     if (splitList) setSplitList(splitList);
   }, []);
   */
-//   console.log(splitList)
+    //   console.log(splitList)
     useEffect(() => {
         localStorage.setItem("time", JSON.stringify(time));
     }, [time]);
@@ -114,8 +98,8 @@ function App() {
     };
 
     const splitTimer = (splitLabel) => {
-        const timestampMachine = new Date(Date.now());
-        const timestamp = timestampMachine.toString().slice(0, 24);
+        // const timestampMachine = new Date(Date.now());
+        const timestamp = new Date(Date.now()).toString().slice(0, 24);
         if (splitLabel === "pause") {
             setSplitList((split) => [
                 ...split,
@@ -124,7 +108,6 @@ function App() {
                     time,
                     interval: latestInterval,
                     timestamp: timestamp,
-                    timestampMachine: timestampMachine,
                 },
             ]);
         } else {
@@ -135,7 +118,6 @@ function App() {
                     time,
                     interval: latestInterval,
                     timestamp: timestamp,
-                    timestampMachine: timestampMachine,
                 },
             ]);
         }
@@ -182,10 +164,17 @@ function App() {
         <div className="App">
             <div className="display">
                 <div className="timer-display">
-                    <div >
-                        <button className={!splitList ? "button-hidden" : "remove-button"} onClick={() => localStorage.clear()}>Clear Cache</button>
-                    </div>
-                    
+                    {/* <div>
+                        <button
+                            className={
+                                !splitList ? "button-hidden" : "remove-button"
+                            }
+                            onClick={() => localStorage.clear()}
+                        >
+                            Clear Cache
+                        </button>
+                    </div> */}
+
                     <span>{formatTime(time).slice(0, -2)}</span>
                     <span>{formatTime(time).slice(-2)}</span>
                 </div>
@@ -228,7 +217,7 @@ function App() {
 
                     return (
                         <div key={time}>
-                        {/* <div key={Math.floor(Math.random() * 100000) + 1}> */}
+                            {/* <div key={Math.floor(Math.random() * 100000) + 1}> */}
                             {splitList.length === 1 ? (
                                 <div></div>
                             ) : (
