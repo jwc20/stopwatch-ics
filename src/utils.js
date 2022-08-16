@@ -32,35 +32,6 @@ const formatTimeMinute = (mSec) => {
   return min;
 };
 
-// export const makeEvent = (splitItem) => {
-//   // variables for start
-//   let time = Date.parse(splitItem.timestampMachine);
-//   console.log(time)
-//   let year = time.getFullYear();
-//   let month = time.getMonth() + 1;
-//   let day = time.getDate();
-//   let hour = time.getHours();
-//   let minute = time.getMinutes();
-//   let startDate = [year, month, day, hour, minute];
-
-//   // variables for duration
-//   let intervalHour = formatTimeHour(splitItem.interval);
-//   let intervalMinute = formatTimeMinute(splitItem.interval);
-
-//   // variable for title
-//   let label = splitItem.label;
-
-//   const event = {
-//     start: startDate,
-//     duration: {
-//       hours: intervalHour,
-//       minutes: intervalMinute,
-//     },
-//     title: label,
-//   };
-//   return event;
-// };
-
 export const makeEvent = (splitItem) => {
   // variables for start
   let time = new Date(Date.parse(splitItem.timestamp));

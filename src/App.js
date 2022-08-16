@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { formatTime, makeEvent, makeEvents, makeIcs } from "./utils";
 import "./App.css";
 
-// const timestampMachine = new Date(Date.now());
 const timestamp = new Date(Date.now()).toString().slice(0, 24);
 
 let latestInterval = 0;
@@ -15,14 +14,8 @@ const initialSplitList = {
 };
 
 function App() {
-  // const [start, setStart] = useState(null);
-  const [start, setStart] = useState(() => {
-    const saved = localStorage.getItem("start");
-    const initialValue = JSON.parse(saved);
-    return initialValue || null;
-  });
+  const [start, setStart] = useState(null);
   const [paused, setPaused] = useState(true);
-  // const [time, setTime] = useState(0);
   const [time, setTime] = useState(() => {
     const saved = localStorage.getItem("time");
     const initialValue = JSON.parse(saved);
@@ -33,21 +26,6 @@ function App() {
     const initialValue = JSON.parse(saved);
     return initialValue || [initialSplitList];
   });
-
-  /*
-  useEffect(() => {
-    // const time = JSON.parse(localStorage.getItem("time"));
-    const splitList = JSON.parse(localStorage.getItem("splitList"));
-    // if (time) setTime(time);
-    if (splitList) setSplitList(splitList);
-  }, []);
-  */
-
-  //   console.log(splitList)
-
-  // useEffect(() => {
-  //     localStorage.setItem("lastTime", JSON.stringify(splitList[]))
-  // })
 
   useEffect(() => {
     localStorage.setItem("time", JSON.stringify(time));
@@ -105,7 +83,6 @@ function App() {
   };
 
   const splitTimer = (splitLabel) => {
-    // const timestampMachine = new Date(Date.now());
     const timestamp = new Date(Date.now()).toString().slice(0, 24);
     if (splitLabel === "pause") {
       setSplitList((split) => [
@@ -152,7 +129,7 @@ function App() {
     const { length, [length - 2]: last2nd, [length - 1]: last } = splitList;
     if (reset) return "SPLIT TIME";
     if (!last) return formatTime(time);
-    // if (paused) return formatTime(last.time - last2nd.time);
+    if (paused) return formatTime(last.time - last2nd.time);
     return formatTime(time - last.time);
   };
 
@@ -163,25 +140,12 @@ function App() {
     setSplitList(items);
   };
 
-  // const timerState = !paused ? "Pause" : "Start";
   const reset = time === 0;
-  // const formattedTime = formatTime(time);
 
   return (
     <div className="App">
       <div className="display">
         <div className="timer-display">
-          {/* <div>
-                        <button
-                            className={
-                                !splitList ? "button-hidden" : "remove-button"
-                            }
-                            onClick={() => localStorage.clear()}
-                        >
-                            Clear Cache
-                        </button>
-                    </div> */}
-
           <span>{formatTime(time).slice(0, -2)}</span>
           <span>{formatTime(time).slice(-2)}</span>
         </div>
@@ -215,12 +179,9 @@ function App() {
           const { time, label } = x;
           const interval = index > 0 ? time - splitList[index - 1].time : time;
           const splitTimeStamp = splitList[index].timestamp;
-          // console.log(splitTimeStamp);
           latestInterval = interval;
-
           return (
             <div key={time}>
-              {/* <div key={Math.floor(Math.random() * 100000) + 1}> */}
               {splitList.length === 1 ? (
                 <div></div>
               ) : (
@@ -239,10 +200,7 @@ function App() {
                   />
                   <div className={label}>{formatTime(interval)}</div>
                   <div className="total-time">{formatTime(time)}</div>
-                  <div className="split-date">
-                    {/* {splitTimeStamp.toString().slice(0, 24)} */}
-                    {splitTimeStamp}
-                  </div>
+                  <div className="split-date">{splitTimeStamp}</div>
                   <button
                     className={index === 0 ? "button-hidden" : "remove-button"}
                     disabled={index === splitList.length - 1}
