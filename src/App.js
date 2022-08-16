@@ -19,24 +19,32 @@ function App() {
     const [start, setStart] = useState(null);
     const [paused, setPaused] = useState(true);
     // const [time, setTime] = useState(0);
-
     const [time, setTime] = useState(() => {
         const saved = localStorage.getItem("time");
         const initialValue = JSON.parse(saved);
         return initialValue || 0;
     });
-    // const [splitList, setSplitList] = useState([initialSplitList]);
-
     const [splitList, setSplitList] = useState(() => {
         const saved = localStorage.getItem("splitList");
-        const initialValue = JSON.parse(saved);
-        for (let i = 0; i < initialValue.length - 1; i++) {
-            initialValue[i] = JSON.parse(initialValue[i].timestampMachine)
+        if (saved) {
+            const initialValue = JSON.parse(saved);
+            // console.log(initialValue)
+            // console.log(typeof initialValue[0].timestampMachine)
+            for(let i = 0; i < initialValue.length-1; i++){
+                if (typeof initialValue[i].timestampMachine === "string") {
+                    initialValue[i] = new Date(JSON.parse(initialValue[i].timestampMachine))
+                }
+                if (typeof initialValue.interval === "string") {
+                    initialValue[i] = parseInt(initialValue[i].interval)
+                }
+            }
+            console.log([initialValue])
+            return [initialValue];
         }
-        console.log(initialValue);
-        return [initialValue] || [initialSplitList];
+        return [initialSplitList];
     });
 
+    
     /*
   useEffect(() => {
     // const time = JSON.parse(localStorage.getItem("time"));
@@ -45,14 +53,14 @@ function App() {
     if (splitList) setSplitList(splitList);
   }, []);
   */
-
+//   console.log(splitList)
     useEffect(() => {
         localStorage.setItem("time", JSON.stringify(time));
     }, [time]);
 
     useEffect(() => {
         localStorage.setItem("splitList", JSON.stringify(splitList));
-        console.log(splitList);
+        // console.log(splitList)
     }, [splitList]);
 
     useEffect(() => {
@@ -95,7 +103,7 @@ function App() {
             }
             const icsText = makeEvents(eventList);
 
-            makeIcs(icsText, splitList[0].timestampMachine);
+            // makeIcs(icsText, splitList[0].timestampMachine);
         }
     };
 
@@ -174,6 +182,10 @@ function App() {
         <div className="App">
             <div className="display">
                 <div className="timer-display">
+                    <div >
+                        <button className={!splitList ? "button-hidden" : "remove-button"} onClick={() => localStorage.clear()}>Clear Cache</button>
+                    </div>
+                    
                     <span>{formatTime(time).slice(0, -2)}</span>
                     <span>{formatTime(time).slice(-2)}</span>
                 </div>
@@ -216,6 +228,7 @@ function App() {
 
                     return (
                         <div key={time}>
+                        {/* <div key={Math.floor(Math.random() * 100000) + 1}> */}
                             {splitList.length === 1 ? (
                                 <div></div>
                             ) : (

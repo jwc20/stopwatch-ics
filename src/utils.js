@@ -34,8 +34,8 @@ const formatTimeMinute = (mSec) => {
 
 export const makeEvent = (splitItem) => {
   // variables for start
-  let time = splitItem.timestampMachine;
-  console.log(new Date(time))
+  let time = Date.parse(splitItem.timestampMachine);
+  console.log(time)
   let year = time.getFullYear();
   let month = time.getMonth() + 1;
   let day = time.getDate();
