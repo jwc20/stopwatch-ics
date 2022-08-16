@@ -1,5 +1,7 @@
 # stopwatch-ics
 
+[demo](https://gateway.pinata.cloud/ipfs/QmbtWYQmt6LSq2TxcpFwrAFXivfHZbxmHd7C1TceGTJuQf/)
+
 ## FIXME
 
 - [x] The splitList render must be empty before starting.\
