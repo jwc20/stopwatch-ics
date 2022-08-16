@@ -21,18 +21,6 @@ function App() {
     },
   ]);
 
-  /*
-  useEffect(() => {
-    setSplitList(JSON.stringify(window.localStorage.getItem("splitList")));
-    console.log(splitList);
-  }, []);
-
-  useEffect(() => {
-    window.localStorage.setItem("splitList", splitList);
-  }, [splitList]);
-  JSON.parse(JSON.stringify(splitList));
-  */
-
   useEffect(() => {
     if (!paused) {
       let timer = setInterval(() => {
@@ -43,6 +31,7 @@ function App() {
       }, 4);
       return () => clearInterval(timer);
     }
+
   }, [paused, start]);
 
   useEffect(() => {
@@ -58,20 +47,12 @@ function App() {
   });
 
   const handleExportSubmit = (e) => {
-    // export
-    // need filename and data
-    // splitList = [{...}, {...}, {...}, {...}, ...]
-
     e.preventDefault();
-    // console.log(splitList.length);
-    // console.log(splitList);
     let eventList = [];
     if (splitList.length > 1) {
       for (let i = 0; i < splitList.length; i++) {
         eventList.push(makeEvent(splitList[i]));
       }
-      // makeEvents(eventList)
-      // console.log(makeEvents(eventList));
       const icsText = makeEvents(eventList);
       makeIcs(icsText);
     }
@@ -84,12 +65,8 @@ function App() {
   };
 
   const splitTimer = (splitLabel, interval) => {
-    // const timestamp = new Date(Date.now()).toString().slice(0, 24);
     const timestamp = new Date(Date.now());
-    // console.log(splitList[splitList.length - 1].interval);
-
     if (splitLabel === "pause") {
-      // console.log(label)
       setSplitList((split) => [
         ...split,
         {
