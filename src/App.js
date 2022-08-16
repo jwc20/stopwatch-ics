@@ -201,6 +201,7 @@ function App() {
                   </div>
                   <button
                     className={index === 0 ? "button-hidden" : "remove-button"}
+                    disabled={index === splitList.length - 1}
                     onClick={() => handleRemoveSplit(index, interval)}
                   >
                     X
