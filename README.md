@@ -25,6 +25,10 @@
 - [x] Add edit button to edit description(for calendar events)
 
 - [ ] implement caching
+  - Need to store time and splitList
+  - Maybe just the splitList and the time of the last element in the array.
+
+
 - [ ] add svg block visuals
 - [ ] really need refactoring
 
