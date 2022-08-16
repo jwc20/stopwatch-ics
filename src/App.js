@@ -50,7 +50,7 @@ function App() {
         eventList.push(makeEvent(splitList[i]));
       }
       const icsText = makeEvents(eventList);
-      makeIcs(icsText);
+      makeIcs(icsText, splitList[0].timestamp);
     }
   };
 

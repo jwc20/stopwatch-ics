@@ -69,10 +69,11 @@ export const makeEvents = (events) => {
   return value;
 };
 
-export const makeIcs = (eventsIcs) => {
+export const makeIcs = (eventsIcs, date) => {
+  let filename = date.toString().split(" ", 4).join("_");
   let FileSaver = require("file-saver");
   let blob = new Blob([eventsIcs], {
     type: "text/calendar;charset=utf-8;",
   });
-  FileSaver.saveAs(blob, "test.ics");
+  FileSaver.saveAs(blob, filename + ".ics");
 };
