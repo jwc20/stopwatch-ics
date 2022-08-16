@@ -87,7 +87,7 @@ function App() {
             }
             const icsText = makeEvents(eventList);
 
-            // makeIcs(icsText, splitList[0].timestampMachine);
+            makeIcs(icsText, splitList[0].timestamp);
         }
     };
 
