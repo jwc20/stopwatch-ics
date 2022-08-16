@@ -24,10 +24,12 @@
 - [x] Export to .ics file
 - [x] Add edit button to edit description(for calendar events)
 
-- [ ] implement caching
+- [/] implement caching
   - Need to store time and splitList
   - Maybe just the splitList and the time of the last element in the array.
   - Because of stringify, it's probably better to store timestamps as strings before caching.
+  - Kinda buggy
+- [ ] continue counting timer when stopped or refreshed
 
 
 - [ ] add svg block visuals
