@@ -3,13 +3,12 @@ import { formatTime, makeEvent, makeEvents, makeIcs } from "./utils";
 import "./App.css";
 
 const timestamp = new Date(Date.now());
-// let latestInterval = 0;
+let latestInterval = 0;
 
 function App() {
   const [start, setStart] = useState(null);
   const [paused, setPaused] = useState(true);
   const [time, setTime] = useState(0);
-  let [latestInterval, setLatestInterval] = useState(0);
   const [splitList, setSplitList] = useState([
     {
       label: "start",
@@ -43,16 +42,22 @@ function App() {
     }
   });
 
+  useEffect(() => {
+    window.onbeforeunload = confirmExit;
+    function confirmExit() {
+      return "show warning";
+    }
+  }, []);
+
   const handleExportSubmit = (e) => {
     e.preventDefault();
     let eventList = [];
-    console.log(splitList);
     if (splitList.length > 1) {
       for (let i = 0; i < splitList.length; i++) {
         eventList.push(makeEvent(splitList[i]));
       }
       const icsText = makeEvents(eventList);
-      // makeIcs(icsText);
+      makeIcs(icsText, splitList[0].timestamp);
     }
   };
 
@@ -62,8 +67,7 @@ function App() {
     if (!paused) splitTimer("pause");
   };
 
-  const splitTimer = (splitLabel, interval) => {
-    setLatestInterval(interval);
+  const splitTimer = (splitLabel) => {
     const timestamp = new Date(Date.now());
     if (splitLabel === "pause") {
       setSplitList((split) => [
@@ -142,7 +146,7 @@ function App() {
         <div className="split-timer-display">{currentInterval()}</div>
       </div>
 
-      <div>
+      <div className="split-list">
         <button className={paused ? "start" : "pause"} onClick={startTimer}>
           {timerState}
         </button>
@@ -169,9 +173,7 @@ function App() {
           const { time, label, timestamp } = x;
           const interval = index > 0 ? time - splitList[index - 1].time : time;
           const splitTimeStamp = splitList[index].timestamp;
-          // latestInterval = interval;
-
-          // setLatestInterval(interval);
+          latestInterval = interval;
 
           return (
             <div key={time}>
