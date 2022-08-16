@@ -29,7 +29,6 @@ function App() {
       }, 4);
       return () => clearInterval(timer);
     }
-
   }, [paused, start]);
 
   useEffect(() => {
@@ -47,7 +46,7 @@ function App() {
   const handleExportSubmit = (e) => {
     e.preventDefault();
     let eventList = [];
-    console.log(splitList)
+    console.log(splitList);
     if (splitList.length > 1) {
       for (let i = 0; i < splitList.length; i++) {
         eventList.push(makeEvent(splitList[i]));
@@ -64,7 +63,7 @@ function App() {
   };
 
   const splitTimer = (splitLabel, interval) => {
-    setLatestInterval(interval)
+    setLatestInterval(interval);
     const timestamp = new Date(Date.now());
     if (splitLabel === "pause") {
       setSplitList((split) => [
@@ -109,13 +108,9 @@ function App() {
   };
 
   const handlePlaceholderChange = (index, label) => {
-    if (index === 0) {
-      return "start";
-    } else if (label === "pause") {
-      return "pause";
-    } else {
-      return "split";
-    }
+    if (index === 0) return "start";
+    else if (label === "pause") return "pause";
+    else return "split";
   };
 
   const currentInterval = () => {
