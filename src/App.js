@@ -1,22 +1,20 @@
 import { useState, useEffect } from "react";
 import { formatTime, makeEvent, makeEvents, makeIcs } from "./utils";
-
 import "./App.css";
 
-// const timestamp = new Date(Date.now()).toString().slice(0, 24);
 const timestamp = new Date(Date.now());
-
-let latestInterval = 0;
+// let latestInterval = 0;
 
 function App() {
   const [start, setStart] = useState(null);
   const [paused, setPaused] = useState(true);
   const [time, setTime] = useState(0);
+  let [latestInterval, setLatestInterval] = useState(0);
   const [splitList, setSplitList] = useState([
     {
       label: "start",
       time: 0,
-      interval: 0,
+      interval: latestInterval,
       timestamp: timestamp,
     },
   ]);
@@ -49,12 +47,13 @@ function App() {
   const handleExportSubmit = (e) => {
     e.preventDefault();
     let eventList = [];
+    console.log(splitList)
     if (splitList.length > 1) {
       for (let i = 0; i < splitList.length; i++) {
         eventList.push(makeEvent(splitList[i]));
       }
       const icsText = makeEvents(eventList);
-      makeIcs(icsText);
+      // makeIcs(icsText);
     }
   };
 
@@ -65,6 +64,7 @@ function App() {
   };
 
   const splitTimer = (splitLabel, interval) => {
+    setLatestInterval(interval)
     const timestamp = new Date(Date.now());
     if (splitLabel === "pause") {
       setSplitList((split) => [
@@ -174,7 +174,9 @@ function App() {
           const { time, label, timestamp } = x;
           const interval = index > 0 ? time - splitList[index - 1].time : time;
           const splitTimeStamp = splitList[index].timestamp;
-          latestInterval = interval;
+          // latestInterval = interval;
+
+          // setLatestInterval(interval);
 
           return (
             <div key={time}>
