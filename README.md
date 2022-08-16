@@ -1,6 +1,6 @@
 # stopwatch-ics
 
-[demo](https://gateway.pinata.cloud/ipfs/QmbtWYQmt6LSq2TxcpFwrAFXivfHZbxmHd7C1TceGTJuQf/)
+[demo](https://gateway.pinata.cloud/ipfs/QmeKfJkcFPSJyt5hkDTJA5nNRzQRmvd3xYNe2vyzG7wm2d/)
 
 ## FIXME
 
