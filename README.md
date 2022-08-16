@@ -31,3 +31,8 @@
 ## Tools
 - adamgibbons/ics
 - eligrey/FileSaver.js
+
+## Inspo
+- [NASA Optimis Viewer](https://imgur.com/a/7PdIuWE)
+- [Planway](https://planyway.com/help/features/time-tracking#two-views-calendar-and-list) has a very similar app.
+- [Cal Newport's Time Block Planner](https://www.timeblockplanner.com/)
