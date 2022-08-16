@@ -9,7 +9,6 @@ function App() {
   const [start, setStart] = useState(null);
   const [paused, setPaused] = useState(true);
   const [time, setTime] = useState(0);
-  // let [latestInterval, setLatestInterval] = useState(0);
   const [splitList, setSplitList] = useState([
     {
       label: "start",
@@ -18,13 +17,6 @@ function App() {
       timestamp: timestamp,
     },
   ]);
-
-  /*
-  const getInterval = (interval) => {
-    setLatestInterval(interval)
-    console.log(latestInterval)
-  }
-    */
 
   useEffect(() => {
     if (!paused) {
@@ -137,23 +129,6 @@ function App() {
   const reset = time === 0;
   const formattedTime = formatTime(time);
 
-
-  /*
-  const LatestIntervalRender = ({interval, setLatestInterval}) => {
-    useEffect(() => {
-      setLatestInterval(() => interval);
-    },[interval]);
-    // console.log(latestInterval)
-    return latestInterval
-  }
-    */
-
-  /*
-  const IntervalDisplay = ({ intervalTime }) => {
-    return <>{formatTime(intervalTime)}</>;
-  };
-  */
-
   return (
     <div className="App">
       <div className="display">
@@ -192,7 +167,6 @@ function App() {
           const interval = index > 0 ? time - splitList[index - 1].time : time;
           const splitTimeStamp = splitList[index].timestamp;
           latestInterval = interval;
-
 
           return (
             <div key={time}>

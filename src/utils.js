@@ -33,6 +33,7 @@ const formatTimeMinute = (mSec) => {
 };
 
 export const makeEvent = (splitItem) => {
+  // variables for start
   let time = splitItem.timestamp;
   let year = time.getFullYear();
   let month = time.getMonth() + 1;
@@ -41,9 +42,11 @@ export const makeEvent = (splitItem) => {
   let minute = time.getMinutes();
   let startDate = [year, month, day, hour, minute];
 
+  // variables for duration
   let intervalHour = formatTimeHour(splitItem.interval);
   let intervalMinute = formatTimeMinute(splitItem.interval);
 
+  // variable for title
   let label = splitItem.label;
 
   const event = {
