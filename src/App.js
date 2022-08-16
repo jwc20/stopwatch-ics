@@ -83,6 +83,7 @@ function App() {
         eventList.push(makeEvent(splitList[i]));
       }
       const icsText = makeEvents(eventList);
+
       makeIcs(icsText, splitList[0].timestamp);
     }
   };
@@ -199,6 +200,7 @@ function App() {
           const { time, label, timestamp } = x;
           const interval = index > 0 ? time - splitList[index - 1].time : time;
           const splitTimeStamp = splitList[index].timestamp;
+          console.log(splitTimeStamp)
           latestInterval = interval;
 
           return (
