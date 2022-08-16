@@ -3,13 +3,13 @@ import { formatTime, makeEvent, makeEvents, makeIcs } from "./utils";
 import "./App.css";
 
 const timestamp = new Date(Date.now());
-// let latestInterval = 0;
+let latestInterval = 0;
 
 function App() {
   const [start, setStart] = useState(null);
   const [paused, setPaused] = useState(true);
   const [time, setTime] = useState(0);
-  let [latestInterval, setLatestInterval] = useState(0);
+  // let [latestInterval, setLatestInterval] = useState(0);
   const [splitList, setSplitList] = useState([
     {
       label: "start",
@@ -18,6 +18,13 @@ function App() {
       timestamp: timestamp,
     },
   ]);
+
+  /*
+  const getInterval = (interval) => {
+    setLatestInterval(interval)
+    console.log(latestInterval)
+  }
+    */
 
   useEffect(() => {
     if (!paused) {
@@ -46,13 +53,12 @@ function App() {
   const handleExportSubmit = (e) => {
     e.preventDefault();
     let eventList = [];
-    console.log(splitList);
     if (splitList.length > 1) {
       for (let i = 0; i < splitList.length; i++) {
         eventList.push(makeEvent(splitList[i]));
       }
       const icsText = makeEvents(eventList);
-      // makeIcs(icsText);
+      makeIcs(icsText);
     }
   };
 
@@ -62,8 +68,7 @@ function App() {
     if (!paused) splitTimer("pause");
   };
 
-  const splitTimer = (splitLabel, interval) => {
-    setLatestInterval(interval);
+  const splitTimer = (splitLabel) => {
     const timestamp = new Date(Date.now());
     if (splitLabel === "pause") {
       setSplitList((split) => [
@@ -132,6 +137,23 @@ function App() {
   const reset = time === 0;
   const formattedTime = formatTime(time);
 
+
+  /*
+  const LatestIntervalRender = ({interval, setLatestInterval}) => {
+    useEffect(() => {
+      setLatestInterval(() => interval);
+    },[interval]);
+    // console.log(latestInterval)
+    return latestInterval
+  }
+    */
+
+  /*
+  const IntervalDisplay = ({ intervalTime }) => {
+    return <>{formatTime(intervalTime)}</>;
+  };
+  */
+
   return (
     <div className="App">
       <div className="display">
@@ -142,7 +164,7 @@ function App() {
         <div className="split-timer-display">{currentInterval()}</div>
       </div>
 
-      <div>
+      <div className="split-list">
         <button className={paused ? "start" : "pause"} onClick={startTimer}>
           {timerState}
         </button>
@@ -169,9 +191,8 @@ function App() {
           const { time, label, timestamp } = x;
           const interval = index > 0 ? time - splitList[index - 1].time : time;
           const splitTimeStamp = splitList[index].timestamp;
-          // latestInterval = interval;
+          latestInterval = interval;
 
-          // setLatestInterval(interval);
 
           return (
             <div key={time}>

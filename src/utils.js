@@ -19,6 +19,19 @@ export const formatTime = (mSec) => {
   );
 };
 
+const formatTimeHour = (mSec) => {
+  let timeElapsed = new Date(mSec);
+  let hour = timeElapsed.getUTCHours();
+  return hour;
+};
+
+const formatTimeMinute = (mSec) => {
+  let timeElapsed = new Date(mSec);
+  let min = timeElapsed.getUTCMinutes();
+  if (min < 1) min = 1;
+  return min;
+};
+
 export const makeEvent = (splitItem) => {
   let time = splitItem.timestamp;
   let year = time.getFullYear();
@@ -27,10 +40,11 @@ export const makeEvent = (splitItem) => {
   let hour = time.getHours();
   let minute = time.getMinutes();
   let startDate = [year, month, day, hour, minute];
-  let splitInterval = new Date(splitItem.interval);
-  let intervalHour = splitInterval.getUTCHours();
-  let intervalMinute = splitInterval.getUTCMinutes();
-  let label = splitItem.label
+
+  let intervalHour = formatTimeHour(splitItem.interval);
+  let intervalMinute = formatTimeMinute(splitItem.interval);
+
+  let label = splitItem.label;
 
   const event = {
     start: startDate,
