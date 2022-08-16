@@ -132,6 +132,16 @@ function App() {
     setSplitList(items);
   };
 
+  useEffect(() => {
+    const splitList = JSON.parse(localStorage.getItem("splitList"));
+    if (splitList) setSplitList(splitList);
+    console.log(splitList);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("splitList", JSON.stringify(splitList));
+  }, [splitList]);
+
   const timerState = !paused ? "Pause" : "Start";
   const reset = time === 0;
   const formattedTime = formatTime(time);
