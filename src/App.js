@@ -42,6 +42,13 @@ function App() {
     }
   });
 
+  useEffect(() => {
+    window.onbeforeunload = confirmExit;
+    function confirmExit() {
+      return "show warning";
+    }
+  }, []);
+
   const handleExportSubmit = (e) => {
     e.preventDefault();
     let eventList = [];
