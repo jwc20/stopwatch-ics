@@ -8,8 +8,8 @@
        ~~- [ ] The splitTimer resets when pausing.~~
 - [x] Data disappears when removing the last element in the splitList.
 - [ ] Make splitList into a table
-- [ ] Dont export start (first element) of the splitList(?)
-- [ ] Events uses predecessor interval time as duration.
+      ~~- [ ] Dont export start (first element) of the splitList(?)~~
+- [x] Events uses predecessor interval time as duration.
 
 ## TODO
 
@@ -28,8 +28,8 @@
 - [ ] add svg block visuals
 - [ ] really need refactoring
 
-
 ## Note
+
 - For all calendars (Google Calendar, Apple/Microsoft Calendar), each events that are less than 1 minute appear as 30 minute block.
 
 ## Tools
