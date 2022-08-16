@@ -27,6 +27,7 @@
 - [ ] implement caching
   - Need to store time and splitList
   - Maybe just the splitList and the time of the last element in the array.
+  - Because of stringify, it's probably better to store timestamps as strings before caching.
 
 
 - [ ] add svg block visuals
