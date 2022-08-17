@@ -56,3 +56,23 @@
 .remove-button {
   margin-left: 10px;
 }
+
+.timer-display {
+    text-align: center;
+}
+.timer {
+    font-size:400%;
+}
+
+.milliseconds {
+    font-size:100%;
+}
+
+.split-timer-display {
+    font-size: 100%;
+    color: grey;
+}
+
+.white-content {
+    background: #e4e4e4;
+  }
