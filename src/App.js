@@ -7,9 +7,8 @@ import {
     dateToArray,
 } from "./utils";
 import "./App.css";
-import ToggleDark from './toggleDark';
-import { ThemeContext, themes } from './themeContext';
-
+import ToggleDark from "./toggleDark";
+import { ThemeContext, themes } from "./themeContext";
 
 const timestamp = new Date(Date.now()).toString().slice(0, 24);
 
@@ -181,19 +180,15 @@ function App() {
     return (
         <div className="App">
             <ThemeContext.Consumer>
-            {({ changeTheme }) => (
-              <button
-                color="link"
-                onClick={() => {
-                  setDarkMode(!darkMode);
-                  changeTheme(darkMode ? themes.light : themes.dark);
-                }}
-              >
-                <i className={darkMode ? 'fas fa-sun' : 'fas fa-moon'}></i>
-                <span className="d-lg-none d-md-block">Switch mode</span>
-              </button>
-            )}
-          </ThemeContext.Consumer>
+                {({ changeTheme }) => (
+                    <ToggleDark
+                        toggleDark={() => {
+                            setDarkMode(!darkMode);
+                            changeTheme(darkMode ? themes.light : themes.dark);
+                        }}
+                    />
+                )}
+            </ThemeContext.Consumer>
             <div className="display">
                 <div className="timer-display">
                     <span className="timer">
