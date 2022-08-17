@@ -11,6 +11,7 @@
       ~~- [ ] Dont export start (first element) of the splitList(?)~~
 - [x] Events uses predecessor interval time as duration.
 - [ ] want to continue counting timer and interval timer to reset to 0 when stopped or refreshed.
+- [ ] Instead of adding the interval time to the timestamp to get event duration, let duration at some index i be equal to splitList[i+1].timestamp - splitList[i].timestamp for all i >= 0 and convert this readable format.
 
 ## TODO
 
