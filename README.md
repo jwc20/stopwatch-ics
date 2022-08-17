@@ -6,8 +6,8 @@
 
 - [x] The splitList render must be empty before starting.\
        ~~The splitTimer resets when pausing.~~
-- [x] Data disappears when removing the last element in the splitList.
-- [ ] Make splitList into a table\
+- [x] Data disappears when removing the last element in the splitList.\
+~~Make splitList into a table~~
        ~~Dont export start (first element) of the splitList(?)~~
 - [x] Events uses predecessor interval time as duration.\
 ~~want to continue counting timer and interval timer to reset to 0 when stopped or refreshed.~~
