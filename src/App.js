@@ -147,7 +147,8 @@ function App() {
   const handlePlaceholderChange = (index, label) => {
     if (index === 0) return "start";
     else if (label === "pause") return "pause";
-    else return "split";
+    else if (label === "split") return "split";
+    else return label;
   };
 
   const currentInterval = () => {
