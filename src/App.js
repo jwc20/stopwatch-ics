@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { formatTime, makeEvent, makeEvents, makeIcs, dateToArray } from "./utils";
+import { formatTime, makeEvent, makeEvents, makeIcs, dateToArray, formatTimeHour, formatTimeMinute } from "./utils";
 import "./App.css";
 
 const timestamp = new Date(Date.now()).toString().slice(0, 24);
@@ -68,6 +68,7 @@ function App() {
     let eventList = [];
     if (splitList.length > 1) {
 
+      // first event
       eventList.push({
         start: dateToArray(splitList[0].timestamp),
         duration: {
@@ -77,9 +78,24 @@ function App() {
         title: splitList[0].label,
       });
 
-      for (let i = 1; i < splitList.length; i++) {
+      // events that is not the first or last
+      for (let i = 1; i < splitList.length-1; i++) {
         eventList.push(makeEvent(splitList[i], splitList[i - 1]));
       }
+
+      // last event 
+      const lastItem = splitList[splitList.length-1]
+      eventList.push({
+        start: dateToArray(lastItem.timestamp),
+        duration: {
+          hours: formatTimeHour(lastItem.interval),
+          minutes: formatTimeMinute(lastItem.interval),
+        },
+        title: lastItem.label,
+      });
+
+      console.log(eventList)
+
       const icsText = makeEvents(eventList);
       makeIcs(icsText, splitList[0].timestamp);
     }

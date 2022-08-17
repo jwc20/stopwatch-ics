@@ -19,15 +19,16 @@ export const formatTime = (mSec) => {
     );
 };
 
-const formatTimeHour = (mSec) => {
+export const formatTimeHour = (mSec) => {
     let timeElapsed = new Date(mSec);
     let hour = timeElapsed.getUTCHours();
     return hour;
 };
 
-const formatTimeMinute = (mSec) => {
+export const formatTimeMinute = (mSec) => {
     let timeElapsed = new Date(mSec);
     let min = timeElapsed.getUTCMinutes();
+    console.log(min);
     if (min < 1) min = 1;
     return min;
 };
@@ -53,7 +54,8 @@ export const makeEvent = (splitItem, prevSplitItem) => {
     let label = splitItem.label;
 
     // variables for duration
-    const intervalDuration = splitItem.interval;
+    // const intervalDuration = splitItem.interval;
+    const intervalDuration = prevSplitItem.interval;
     let intervalDurationHours = formatTimeHour(intervalDuration);
     let intervalDurationMinutes = formatTimeMinute(intervalDuration);
 
@@ -72,28 +74,41 @@ export const makeEvent = (splitItem, prevSplitItem) => {
 
     // If splitItem.interval < timestampDifference, then duration = splitItem.interval
     // If splitItem.interval >= timestampDifference, then duration = timestampDifference
-    if (intervalDuration < timestampDifference) {
-        const event = {
-            start: startDate,
-            duration: {
-                hours: intervalDurationHours,
-                minutes: intervalDurationMinutes,
-            },
-            title: label,
-        };
-        return event;
-    } else {
-        const event = {
-            start: startDate,
-            duration: {
-                hours: timestampDifferenceHours,
-                minutes: timestampDifferenceMinutes,
-            },
-            title: label,
-        };
-        return event;
-    }
+    // if (intervalDuration < timestampDifference) {
+    //     const event = {
+    //         start: startDate,
+    //         duration: {
+    //             hours: timestampDifferenceHours,
+    //             minutes: timestampDifferenceMinutes,
+    //         },
+    //         title: label,
+    //     };
+    //     console.log("timestmapd", event);
+    //     return event;
+    // } else if (intervalDuration > timestampDifference) {
+    //     const event = {
+    //         start: startDate,
+    //         duration: {
+    //             hours: intervalDurationHours,
+    //             minutes: intervalDurationMinutes,
+    //         },
+    //         title: label,
+    //     };
+    //     console.log("intervalD", event);
+    //     return event;
+    // }
 
+    const event = {
+        start: startDate,
+        duration: {
+            hours: timestampDifferenceHours,
+            minutes: timestampDifferenceMinutes,
+        },
+        title: label,
+    };
+
+    // console.log("timestmapd", event);
+    return event;
     // return event;
 };
 
