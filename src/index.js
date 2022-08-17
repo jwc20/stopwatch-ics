@@ -6,9 +6,9 @@ import ThemeContextWrapper from "./themeContextWrapper";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-    <ThemeContextWrapper>
-        <React.StrictMode>
-            <App />
-        </React.StrictMode>
-    </ThemeContextWrapper>
+  <ThemeContextWrapper>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </ThemeContextWrapper>
 );
