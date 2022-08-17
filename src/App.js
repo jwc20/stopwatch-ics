@@ -1,6 +1,14 @@
 import { useState, useEffect } from "react";
-import { formatTime, makeEvent, makeEvents, makeIcs, dateToArray, formatTimeHour, formatTimeMinute } from "./utils";
+import {
+  formatTime,
+  makeEvent,
+  makeEvents,
+  makeIcs,
+  dateToArray,
+} from "./utils";
 import "./App.css";
+import ToggleDark from "./toggleDark";
+import { ThemeContext, themes } from "./themeContext";
 
 const timestamp = new Date(Date.now()).toString().slice(0, 24);
 
@@ -14,6 +22,8 @@ const initialSplitList = {
 };
 
 function App() {
+  const [darkMode, setDarkMode] = useState(true);
+
   const [start, setStart] = useState(null);
   const [paused, setPaused] = useState(true);
   const [time, setTime] = useState(() => {
@@ -67,7 +77,6 @@ function App() {
     e.preventDefault();
     let eventList = [];
     if (splitList.length > 1) {
-
       // first event
       eventList.push({
         start: dateToArray(splitList[0].timestamp),
@@ -78,23 +87,9 @@ function App() {
         title: splitList[0].label,
       });
 
-      // events that is not the first or last
       for (let i = 1; i < splitList.length; i++) {
         eventList.push(makeEvent(splitList[i], splitList[i - 1]));
       }
-
-      // last event 
-    //   const lastItem = splitList[splitList.length-1]
-    //   eventList.push({
-    //     start: dateToArray(lastItem.timestamp),
-    //     duration: {
-    //       hours: formatTimeHour(lastItem.interval),
-    //       minutes: formatTimeMinute(lastItem.interval),
-    //     },
-    //     title: lastItem.label,
-    //   });
-
-      console.log(eventList)
 
       const icsText = makeEvents(eventList);
       makeIcs(icsText, splitList[0].timestamp);
@@ -170,15 +165,25 @@ function App() {
 
   return (
     <div className="App">
+      <ThemeContext.Consumer>
+        {({ changeTheme }) => (
+          <ToggleDark
+            toggleDark={() => {
+              setDarkMode(!darkMode);
+              changeTheme(darkMode ? themes.light : themes.dark);
+            }}
+          />
+        )}
+      </ThemeContext.Consumer>
       <div className="display">
         <div className="timer-display">
-          <span>{formatTime(time).slice(0, -2)}</span>
-          <span>{formatTime(time).slice(-2)}</span>
+          <span className="timer">{formatTime(time).slice(0, -2)}</span>
+          <span className="milliseconds">{formatTime(time).slice(-2)}</span>
         </div>
         <div className="split-timer-display">{currentInterval()}</div>
       </div>
 
-      <div className="split-list">
+      <div className="buttons">
         <button className={paused ? "start" : "pause"} onClick={startTimer}>
           {!paused ? "Pause" : "Start"}
         </button>
