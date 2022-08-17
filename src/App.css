@@ -1,127 +1,147 @@
 .App {
-    text-align: center;
+  text-align: center;
 }
 
 .App-header {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
 }
 
 .split-item {
-    display: flex;
-    justify-content: center;
-    padding: 10px;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
 }
 
 .split-date {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 .label-input {
-    margin-left: 10px;
-    margin-right: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .current-date {
-    margin-left: 10px;
-    color: gray;
+  margin-left: 10px;
+  color: gray;
 }
 
 .display {
-    padding-top: 30px;
-    padding-bottom: 10px;
+  padding-top: 30px;
+  padding-bottom: 10px;
 }
 
 .total-time {
-    margin-left: 10px;
-    margin-right: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .list-title {
-    display: flex;
-    justify-content: center;
-    padding: 10px;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
 }
 
 .button-hidden {
-    visibility: hidden;
+  visibility: hidden;
 }
 
 .remove-button {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 .timer-display {
-    text-align: center;
+  text-align: center;
 }
 
 .timer {
-    font-size: 400%;
+  font-size: 400%;
 }
 
 .milliseconds {
-    font-size: 100%;
+  font-size: 100%;
 }
 
 .wrapper {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    padding: 10px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  padding: 10px;
 }
 
 #checkbox-toggle {
-    margin-right: 7px;
+  margin-right: 7px;
 }
 
 .split-timer-display {
-    font-size: 100%;
-    color: #b2b2b2;
+  font-size: 100%;
+  color: #b2b2b2;
 }
 
 /* Dark mode */
 .white-content {
-    background: #1c1c25;
+  background: #1c1c25;
 }
 
 .white-content .display {
-    color: #8aff80;
-    padding-top: 30px;
-    padding-bottom: 10px;
+  color: #8aff80;
+  padding-top: 30px;
+  padding-bottom: 10px;
 }
 
 .white-content .split-item {
-    color: #f8f8f2;
-    display: flex;
-    justify-content: center;
-    padding: 10px;
+  color: #f8f8f2;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
 }
 
 .white-content .split-date {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 .white-content .label-input {
-    background-color:#454158;
-    color: #f8f8f2;
-    margin-left: 10px;
-    margin-right: 10px;
+  background-color: #454158;
+  color: #f8f8f2;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .white-content .current-date {
-    margin-left: 10px;
-    color: gray;
+  margin-left: 10px;
+  color: gray;
 }
 .white-content .wrapper {
-    color: #f8f8f2;
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    padding: 10px;
+  color: #f8f8f2;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  padding: 10px;
+}
+
+.start {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.pause {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.split {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.reset {
+  margin-left: 10px;
+  margin-right: 10px;
 }
