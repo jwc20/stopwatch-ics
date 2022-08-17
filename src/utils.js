@@ -48,7 +48,7 @@ export const dateToArray = (date) => {
 
 export const makeEvent = (splitItem, prevSplitItem) => {
     // variables for start
-    const startDate = dateToArray(splitItem.timestamp);
+    const startDate = dateToArray(prevSplitItem.timestamp);
 
     // variable for title
     let label = splitItem.label;
