@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { formatTime, makeEvent, makeEvents, makeIcs } from "./utils";
+import { formatTime, makeEvent, makeEvents, makeIcs, dateToArray, formatTimeHour, formatTimeMinute } from "./utils";
 import "./App.css";
 
 const timestamp = new Date(Date.now()).toString().slice(0, 24);
@@ -67,11 +67,36 @@ function App() {
     e.preventDefault();
     let eventList = [];
     if (splitList.length > 1) {
-      for (let i = 0; i < splitList.length; i++) {
-        eventList.push(makeEvent(splitList[i]));
-      }
-      const icsText = makeEvents(eventList);
 
+      // first event
+      eventList.push({
+        start: dateToArray(splitList[0].timestamp),
+        duration: {
+          hours: 0,
+          minutes: 1,
+        },
+        title: splitList[0].label,
+      });
+
+      // events that is not the first or last
+      for (let i = 1; i < splitList.length; i++) {
+        eventList.push(makeEvent(splitList[i], splitList[i - 1]));
+      }
+
+      // last event 
+    //   const lastItem = splitList[splitList.length-1]
+    //   eventList.push({
+    //     start: dateToArray(lastItem.timestamp),
+    //     duration: {
+    //       hours: formatTimeHour(lastItem.interval),
+    //       minutes: formatTimeMinute(lastItem.interval),
+    //     },
+    //     title: lastItem.label,
+    //   });
+
+      console.log(eventList)
+
+      const icsText = makeEvents(eventList);
       makeIcs(icsText, splitList[0].timestamp);
     }
   };
@@ -122,7 +147,8 @@ function App() {
   const handlePlaceholderChange = (index, label) => {
     if (index === 0) return "start";
     else if (label === "pause") return "pause";
-    else return "split";
+    else if (label === "split") return "split";
+    else return label;
   };
 
   const currentInterval = () => {
