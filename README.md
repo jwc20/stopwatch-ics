@@ -12,7 +12,7 @@
 - [x] Events uses predecessor interval time as duration.\
 ~~want to continue counting timer and interval timer to reset to 0 when stopped or refreshed.~~
 - [ ] **(In progress, need testing)** Instead of adding the interval time to the timestamp to get event duration, let duration at some index i be equal to splitList[i+1].timestamp - splitList[i].timestamp for all i >= 0 and convert this readable format.
-- [ ] When refreshing client, the input form resets.
+- [x] When refreshing client, the input form resets.
 
 ## TODO
 
