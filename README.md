@@ -8,6 +8,7 @@ https://user-images.githubusercontent.com/99288419/185266798-15318f66-c606-4711-
 
 ## Features
 - Stopwatch with split functionality
+- Dark mode
 - Editable labels for each split intervals
 - Caching/persistent data (you don't lose your data when the page is refreshed)
 - Export to .ics files compatible for Mac, Windows, and Google Calendar apps
