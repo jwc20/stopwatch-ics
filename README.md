@@ -6,11 +6,9 @@ A web app for tracking time and exporting data to calendar apps.
 
 
 
-
 ## Tools
 
 - adamgibbons/ics
-- eligrey/FileSaver.js
 
 ## Inspo
 
