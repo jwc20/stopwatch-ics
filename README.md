@@ -6,13 +6,12 @@ A web app for tracking time and exporting data to calendar apps.
 
 https://user-images.githubusercontent.com/99288419/185266798-15318f66-c606-4711-a811-a0f903dd9e55.mov
 
+## Features
+- Stopwatch with split functionality
+- Editable labels for each split intervals
+- Caching/persistent data (you don't lose your data when the page is refreshed)
+- Export to .ics files compatible for Mac, Windows, and Google Calendar apps
 
 ## Tools
 
 - adamgibbons/ics
-
-## Inspo
-
-- [NASA Optimis Viewer](https://imgur.com/a/7PdIuWE)
-- [Planyway](https://planyway.com/help/features/time-tracking#two-views-calendar-and-list) has a very similar app.
-- [Cal Newport's Time Block Planner](https://www.timeblockplanner.com/)
