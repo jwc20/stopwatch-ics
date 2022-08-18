@@ -56,3 +56,92 @@
 .remove-button {
   margin-left: 10px;
 }
+
+.timer-display {
+  text-align: center;
+}
+
+.timer {
+  font-size: 400%;
+}
+
+.milliseconds {
+  font-size: 100%;
+}
+
+.wrapper {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  padding: 10px;
+}
+
+#checkbox-toggle {
+  margin-right: 7px;
+}
+
+.split-timer-display {
+  font-size: 100%;
+  color: #b2b2b2;
+}
+
+/* Dark mode */
+.white-content {
+  background: #1c1c25;
+}
+
+.white-content .display {
+  color: #8aff80;
+  padding-top: 30px;
+  padding-bottom: 10px;
+}
+
+.white-content .split-item {
+  color: #f8f8f2;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+.white-content .split-date {
+  margin-left: 10px;
+}
+
+.white-content .label-input {
+  background-color: #454158;
+  color: #f8f8f2;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.white-content .current-date {
+  margin-left: 10px;
+  color: gray;
+}
+.white-content .wrapper {
+  color: #f8f8f2;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  padding: 10px;
+}
+
+.start {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.pause {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.split {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.reset {
+  margin-left: 10px;
+  margin-right: 10px;
+}
