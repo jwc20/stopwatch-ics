@@ -150,7 +150,11 @@ function App() {
     const { length, [length - 2]: last2nd, [length - 1]: last } = splitList;
     if (reset) return "SPLIT TIME";
     if (!last) return formatTime(time);
-    if (paused) return formatTime(last.time - last2nd.time);
+    if (paused && last2nd !== undefined){
+      console.log(last2nd)
+      return formatTime(last.time - last2nd.time);
+
+    }
     return formatTime(time - last.time);
   };
 
