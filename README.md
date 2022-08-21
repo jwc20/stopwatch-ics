@@ -2,7 +2,9 @@
 
 A web app for tracking time and exporting data to calendar apps.
 
-[Demo](https://gateway.pinata.cloud/ipfs/QmfKtJKkykX977LaS7BBrPkL4aaUdqFjcu49GFatp2t1pp/)
+
+[Github Demo](jwc20.github.io/stopwatch-ics/)
+[IPFS Live Demo](https://gateway.pinata.cloud/ipfs/Qmbhci7ZvYGFgoarqw9AVgnoj3F92UdffPeKaRGfQyU4as/)
 
 https://user-images.githubusercontent.com/99288419/185266798-15318f66-c606-4711-a811-a0f903dd9e55.mov
 
