@@ -250,7 +250,7 @@ function App() {
         })}
         <button
           type="submit-button"
-          disabled={reset}
+          disabled={reset || !paused}
           onClick={handleExportSubmit}
         >
           export
