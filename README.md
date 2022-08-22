@@ -2,10 +2,16 @@
 
 A web app for tracking time and exporting data to calendar apps.
 
-[Github Demo](https://jwc20.github.io/stopwatch-ics/)\
 [IPFS Live Demo](https://gateway.pinata.cloud/ipfs/Qmbhci7ZvYGFgoarqw9AVgnoj3F92UdffPeKaRGfQyU4as/)
 
 https://user-images.githubusercontent.com/99288419/185266798-15318f66-c606-4711-a811-a0f903dd9e55.mov
+
+To install and build, clone this repo and run
+
+```
+npm install
+npm start
+```
 
 ## Features
 
