@@ -22,6 +22,10 @@ npm start
 - Caching/persistent data (you don't lose your data when the page is refreshed)
 - Export to .ics files compatible for Mac, Windows, and Google Calendar apps
 
+## Features to add ideas
+
+- Countdown feature
+
 ## Tools
 
 - adamgibbons/ics
