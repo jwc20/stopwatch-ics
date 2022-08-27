@@ -29,3 +29,6 @@ npm start
 ## Tools
 
 - adamgibbons/ics
+
+## Related
+- [The Problem with Time & Timezones - Computerphile](https://www.youtube.com/watch?v=-5wpm-gesOY&t=0s&ab_channel=Computerphile)
