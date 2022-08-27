@@ -25,7 +25,6 @@ npm start
 ## Features to add
 
 - Countdown("Pomodoro") feature
-    - (Note) A stronger alternative would be to have a feature to create a time-block schedule and have a countdown timer running going through each time-block.
 
 ## Tools
 
