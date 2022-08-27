@@ -22,13 +22,13 @@ npm start
 - Caching/persistent data (you don't lose your data when the page is refreshed)
 - Export to .ics files compatible for Mac, Windows, and Google Calendar apps
 
-## Features to add ideas
+## Features to add
 
-- Countdown feature
+- Countdown("Pomodoro") feature
 
 ## Tools
 
-- adamgibbons/ics
+- [adamgibbons/ics](https://github.com/adamgibbons/ics)
 
 ## Related
 - [The Problem with Time & Timezones - Computerphile](https://www.youtube.com/watch?v=-5wpm-gesOY&t=0s&ab_channel=Computerphile)
