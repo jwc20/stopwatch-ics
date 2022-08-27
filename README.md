@@ -33,4 +33,7 @@ npm start
 ## Related
 - [The Problem with Time & Timezones - Computerphile](https://www.youtube.com/watch?v=-5wpm-gesOY&t=0s&ab_channel=Computerphile)
 - [karpathy/ulogme](https://github.com/karpathy/ulogme)
-- [Demonstration of crew autonomy through self-scheduling onboard ISS](https://ntrs.nasa.gov/api/citations/20180005211/downloads/20180005211.pdf)
+- [Demonstration of crew autonomy through self-scheduling onboard ISS](https://ntrs.nasa.gov/api/citations/20180005211/downloads/20180005211.pdf) 
+    - Their methods for priority list and their playbook web app on slide 12-13 is really interesting.
+- [Cal Newport's time-block](https://www.calnewport.com/blog/2013/12/21/deep-habits-the-importance-of-planning-every-minute-of-your-work-day/)
+- [Dartmouth's tip on time management](https://students.dartmouth.edu/academic-skills/learning-resources/time-management-)
