@@ -30,7 +30,7 @@ npm start
 
 - [adamgibbons/ics](https://github.com/adamgibbons/ics)
 
-## Related
+## See also
 - [The Problem with Time & Timezones - Computerphile](https://www.youtube.com/watch?v=-5wpm-gesOY&t=0s&ab_channel=Computerphile)
 - [karpathy/ulogme](https://github.com/karpathy/ulogme)
 - [Demonstration of crew autonomy through self-scheduling onboard ISS](https://ntrs.nasa.gov/api/citations/20180005211/downloads/20180005211.pdf) 
