@@ -10,7 +10,7 @@ import "./App.css";
 import ToggleDark from "./toggleDark";
 import { ThemeContext, themes } from "./themeContext";
 
-const timestamp = new Date(Date.now()).toString().slice(0, 24);
+// const timestamp = new Date(Date.now()).toString().slice(0, 24);
 
 let latestInterval = 0;
 
@@ -18,12 +18,11 @@ const initialSplitList = {
   label: "start",
   time: 0,
   interval: latestInterval,
-  timestamp: timestamp,
+  timestamp: new Date(Date.now()).toString().slice(0, 24),
 };
 
 function App() {
   const [darkMode, setDarkMode] = useState(true);
-
   const [start, setStart] = useState(null);
   const [paused, setPaused] = useState(true);
   const [time, setTime] = useState(() => {
