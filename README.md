@@ -1,5 +1,13 @@
 # stopwatch-ics
 
+
+## Fix bug 
+
+### TODO:
+[ ] Fix that annoying bug that keeps appearing when starting the stopwatch from previous session.
+
+
+
 A web app for tracking time and exporting data to calendar apps.
 
 [Demo](https://gateway.pinata.cloud/ipfs/QmfKtJKkykX977LaS7BBrPkL4aaUdqFjcu49GFatp2t1pp/)
