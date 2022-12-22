@@ -129,7 +129,15 @@ function App() {
   const resetTimer = () => {
     setTime(0);
     setPaused(true);
-    setSplitList([initialSplitList]);
+    // setSplitList([initialSplitList]);
+    setSplitList([
+      {
+        label: "start",
+        time: 0,
+        interval: latestInterval,
+        timestamp: new Date(Date.now()).toString().slice(0, 24),
+      },
+    ]);
   };
 
   const handleLabelChange = (index, e) => {
@@ -149,10 +157,9 @@ function App() {
     const { length, [length - 2]: last2nd, [length - 1]: last } = splitList;
     if (reset) return "SPLIT TIME";
     if (!last) return formatTime(time);
-    if (paused && last2nd !== undefined){
-      console.log(last2nd)
+    if (paused && last2nd !== undefined) {
+      console.log(last2nd);
       return formatTime(last.time - last2nd.time);
-
     }
     return formatTime(time - last.time);
   };
