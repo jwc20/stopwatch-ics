@@ -1,7 +1,5 @@
 # stopwatch-ics
 
-A web app for logging time and exporting data to calendar apps.
-
 [Heroku Live Demo](https://stopwatch-ics.herokuapp.com/)\
 [IPFS Live Demo](https://gateway.pinata.cloud/ipfs/Qmbhci7ZvYGFgoarqw9AVgnoj3F92UdffPeKaRGfQyU4as/)
 
