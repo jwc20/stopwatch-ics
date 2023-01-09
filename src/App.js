@@ -22,6 +22,7 @@ const initialSplitList = {
 };
 
 function App() {
+  const [total, setTotal] = useState(0)
   const [darkMode, setDarkMode] = useState(true);
   const [start, setStart] = useState(null);
   const [paused, setPaused] = useState(true);
@@ -128,6 +129,7 @@ function App() {
 
   const resetTimer = () => {
     setTime(0);
+    setTotal(0);
     setPaused(true);
     // setSplitList([initialSplitList]);
     setSplitList([
@@ -139,6 +141,24 @@ function App() {
       },
     ]);
   };
+
+  const totalTimer = () => {
+    const items = [...splitList]
+    // console.log(items)
+    let totalIntervalTime = 0
+    for (let i = 0; i < splitList.length; i++) {
+        if (splitList[i].label !== "split" && splitList[i].label !== "start" && splitList[i].label !== "pause") {
+            totalIntervalTime += splitList[i].interval
+            // console.log(splitList[i].label)
+        }
+        
+        // console.log(splitList[i].interval)
+    }
+
+    setTotal(totalIntervalTime)
+    // console.log(totalIntervalTime)
+
+  }
 
   const handleLabelChange = (index, e) => {
     const items = [...splitList];
@@ -158,7 +178,7 @@ function App() {
     if (reset) return "SPLIT TIME";
     if (!last) return formatTime(time);
     if (paused && last2nd !== undefined) {
-      console.log(last2nd);
+    //   console.log(last2nd);
       return formatTime(last.time - last2nd.time);
     }
     return formatTime(time - last.time);
@@ -172,6 +192,7 @@ function App() {
   };
 
   const reset = time === 0;
+  
 
   return (
     <div className="App">
@@ -212,6 +233,13 @@ function App() {
           onClick={resetTimer}
         >
           Reset
+        </button>
+        <button
+          className="total"
+          disabled={!paused}
+          onClick={totalTimer}
+        >
+          Total
         </button>
       </div>
       {splitList.length > 0 && <hr />}
@@ -261,6 +289,9 @@ function App() {
         >
           export
         </button>
+        <div style={{ position: 'absolute', bottom: 20, right: 20 }}>Total labeled time: {formatTime(total)}</div>
+
+
       </form>
     </div>
   );
