@@ -315,7 +315,7 @@ function App() {
                 >
                     export
                 </button>
-                <div className="split-item" style={{ position: "absolute", bottom: 20, right: 20 }}>
+              <div className="split-item" style={{ position: "relative", top: 20}}>
                     Total labeled time: {formatTime(total)}
                 </div>
             </form>
