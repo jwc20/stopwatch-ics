@@ -150,6 +150,7 @@ function App() {
             if (
                 items[i].label !== "split" &&
                 items[i].label !== "start" &&
+                items[i].label !== "rest" &&
                 items[i].label !== "pause"
             ) {
                 totalIntervalTime += items[i].interval;
@@ -245,7 +246,6 @@ function App() {
                 </button>
                 <button
                     className="total"
-                    disabled={!paused}
                     onClick={totalTimer}
                 >
                     Total
@@ -315,7 +315,7 @@ function App() {
                 >
                     export
                 </button>
-                <div style={{ position: "absolute", bottom: 20, right: 20 }}>
+                <div className="split-item" style={{ position: "absolute", bottom: 20, right: 20 }}>
                     Total labeled time: {formatTime(total)}
                 </div>
             </form>
