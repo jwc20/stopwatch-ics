@@ -1,7 +1,5 @@
 # stopwatch-ics
 
-[IPFS Live Demo](https://gateway.pinata.cloud/ipfs/QmPrZkSbX6BiNdLz4SKGf4617icrNegm94ihQsMFTsXJ7t/)
-
 [Netlify Live Demo](https://inspiring-cupcake-f443e6.netlify.app/)
 
 https://user-images.githubusercontent.com/99288419/185266798-15318f66-c606-4711-a811-a0f903dd9e55.mov
