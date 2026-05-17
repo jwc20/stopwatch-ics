@@ -52,10 +52,6 @@ export const makeEvent = (splitItem, prevSplitItem) => {
   let label = splitItem.label;
 
   // variables for duration
-  const intervalDuration = prevSplitItem.interval;
-  // let intervalDurationHours = formatTimeHour(intervalDuration);
-  // let intervalDurationMinutes = formatTimeMinute(intervalDuration);
-
   const timestampDifference =
     Date.parse(splitItem.timestamp) - Date.parse(prevSplitItem.timestamp);
   let timestampDifferenceHours = formatTimeHour(timestampDifference);
