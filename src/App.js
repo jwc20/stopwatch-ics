@@ -10,49 +10,82 @@ import "./App.css";
 import ToggleDark from "./toggleDark";
 import { ThemeContext, themes } from "./themeContext";
 
-// const timestamp = new Date(Date.now()).toString().slice(0, 24);
-
-let latestInterval = 0;
-
-const initialSplitList = {
-    label: "start",
-    time: 0,
-    interval: latestInterval,
-    timestamp: new Date(Date.now()).toString().slice(0, 24),
-};
+function makeInitialSplitList() {
+    return [
+        {
+            label: "start",
+            time: 0,
+            interval: 0,
+            timestamp: new Date(Date.now()).toString().slice(0, 24),
+        },
+    ];
+}
 
 function App() {
     const [total, setTotal] = useState(0);
     const [darkMode, setDarkMode] = useState(true);
-    const [start, setStart] = useState(null);
-    const [paused, setPaused] = useState(true);
-    const [time, setTime] = useState(() => {
-        const saved = localStorage.getItem("time");
-        const initialValue = JSON.parse(saved);
-        return initialValue || 0;
+
+    const [paused, setPaused] = useState(() => {
+        const saved = localStorage.getItem("paused");
+        return saved !== null ? JSON.parse(saved) : true;
     });
+
+    const [start, setStart] = useState(() => {
+        const savedPaused = localStorage.getItem("paused");
+        const wasPaused = savedPaused !== null ? JSON.parse(savedPaused) : true;
+        if (!wasPaused) {
+            const savedStart = localStorage.getItem("start");
+            return savedStart !== null ? JSON.parse(savedStart) : null;
+        }
+        return null;
+    });
+
+    const [time, setTime] = useState(() => {
+        const savedPaused = localStorage.getItem("paused");
+        const wasPaused = savedPaused !== null ? JSON.parse(savedPaused) : true;
+        if (!wasPaused) {
+            const savedStart = localStorage.getItem("start");
+            if (savedStart !== null) {
+                return Date.now() - JSON.parse(savedStart);
+            }
+        }
+        const savedTime = localStorage.getItem("time");
+        return savedTime !== null ? JSON.parse(savedTime) : 0;
+    });
+
     const [splitList, setSplitList] = useState(() => {
         const saved = localStorage.getItem("splitList");
         const initialValue = JSON.parse(saved);
-        return initialValue || [initialSplitList];
+        return initialValue || makeInitialSplitList();
     });
 
     useEffect(() => {
         localStorage.setItem("time", JSON.stringify(time));
         localStorage.setItem("splitList", JSON.stringify(splitList));
-    }, [time, splitList]);
+        localStorage.setItem("paused", JSON.stringify(paused));
+        localStorage.setItem("start", JSON.stringify(start));
+    }, [time, splitList, paused, start]);
 
     useEffect(() => {
         if (!paused) {
-            let timer = setInterval(() => {
-                setTime(() => {
-                    const delta = Date.now() - start;
-                    return delta;
-                });
+            const timer = setInterval(() => {
+                setTime(Date.now() - start);
             }, 4);
             return () => clearInterval(timer);
         }
     }, [paused, start]);
+
+    const reset = time === 0;
+
+    const currentInterval = () => {
+        const { length, [length - 2]: last2nd, [length - 1]: last } = splitList;
+        if (reset) return "SPLIT TIME";
+        if (!last) return formatTime(time);
+        if (paused && last2nd !== undefined) {
+            return formatTime(last.time - last2nd.time);
+        }
+        return formatTime(time - last.time);
+    };
 
     useEffect(() => {
         if (time === 0) {
@@ -67,25 +100,19 @@ function App() {
     });
 
     useEffect(() => {
-        window.onbeforeunload = confirmExit;
-        function confirmExit() {
-            return "show warning";
-        }
+        window.onbeforeunload = () => "show warning";
     }, []);
 
     const handleExportSubmit = (e) => {
         e.preventDefault();
-        let eventList = [];
         if (splitList.length > 1) {
-            // first event
-            eventList.push({
-                start: dateToArray(splitList[0].timestamp),
-                duration: {
-                    hours: 0,
-                    minutes: 1,
+            const eventList = [
+                {
+                    start: dateToArray(splitList[0].timestamp),
+                    duration: { hours: 0, minutes: 1 },
+                    title: splitList[0].label,
                 },
-                title: splitList[0].label,
-            });
+            ];
 
             for (let i = 1; i < splitList.length; i++) {
                 eventList.push(makeEvent(splitList[i], splitList[i - 1]));
@@ -97,105 +124,76 @@ function App() {
     };
 
     const startTimer = () => {
-        setStart(Date.now() - time);
+        const newStart = Date.now() - time;
+        setStart(newStart);
         setPaused((p) => !p);
         if (!paused) splitTimer("pause");
     };
 
     const splitTimer = (splitLabel) => {
         const timestamp = new Date(Date.now()).toString().slice(0, 24);
-        if (splitLabel === "pause") {
-            setSplitList((split) => [
-                ...split,
+        setSplitList((prev) => {
+            const lastSplit = prev[prev.length - 1];
+            const interval = time - lastSplit.time;
+            return [
+                ...prev,
                 {
-                    label: "pause",
+                    label: splitLabel === "pause" ? "pause" : "split",
                     time,
-                    interval: latestInterval,
-                    timestamp: timestamp,
+                    interval,
+                    timestamp,
                 },
-            ]);
-        } else {
-            setSplitList((split) => [
-                ...split,
-                {
-                    label: "split",
-                    time,
-                    interval: latestInterval,
-                    timestamp: timestamp,
-                },
-            ]);
-        }
+            ];
+        });
     };
 
     const resetTimer = () => {
         setTime(0);
         setTotal(0);
+        setStart(null);
         setPaused(true);
-        // setSplitList([initialSplitList]);
-        setSplitList([
-            {
-                label: "start",
-                time: 0,
-                interval: latestInterval,
-                timestamp: new Date(Date.now()).toString().slice(0, 24),
-            },
-        ]);
+        setSplitList(makeInitialSplitList());
     };
 
     const totalTimer = () => {
-        const items = [...splitList];
-        // console.log(items)
         let totalIntervalTime = 0;
-        for (let i = 0; i < items.length; i++) {
+        for (const item of splitList) {
             if (
-                items[i].label !== "split" &&
-                items[i].label !== "start" &&
-                items[i].label !== "rest" &&
-                items[i].label !== "pause"
+                item.label !== "split" &&
+                item.label !== "start" &&
+                item.label !== "rest" &&
+                item.label !== "pause"
             ) {
-                totalIntervalTime += items[i].interval;
-                // console.log(items[i].label)
+                totalIntervalTime += item.interval;
             }
-
-            // console.log(items[i].interval)
         }
-
         setTotal(totalIntervalTime);
-        // console.log(totalIntervalTime)
     };
 
     const handleLabelChange = (index, e) => {
-        const items = [...splitList];
-        items[index][e.target.name] = e.target.value;
+        const items = splitList.map((item, i) =>
+            i === index ? { ...item, [e.target.name]: e.target.value } : item
+        );
         setSplitList(items);
     };
 
     const handlePlaceholderChange = (index, label) => {
         if (index === 0) return "start";
-        else if (label === "pause") return "pause";
-        else if (label === "split") return "split";
-        else return label;
-    };
-
-    const currentInterval = () => {
-        const { length, [length - 2]: last2nd, [length - 1]: last } = splitList;
-        if (reset) return "SPLIT TIME";
-        if (!last) return formatTime(time);
-        if (paused && last2nd !== undefined) {
-            //   console.log(last2nd);
-            return formatTime(last.time - last2nd.time);
-        }
-        return formatTime(time - last.time);
+        if (label === "pause") return "pause";
+        if (label === "split") return "split";
+        return label;
     };
 
     const handleRemoveSplit = (i, interval) => {
-        const items = [...splitList];
-        splitList[i - 1].interval += interval;
-        items.splice(i, 1);
+        const items = splitList
+            .map((item, idx) =>
+                idx === i - 1
+                    ? { ...item, interval: item.interval + interval }
+                    : item
+            )
+            .filter((_, idx) => idx !== i);
         setSplitList(items);
     };
-
-    const reset = time === 0;
 
     return (
         <div className="App">
@@ -254,13 +252,14 @@ function App() {
             {splitList.length > 0 && <hr />}
             <form onSubmit={handleExportSubmit}>
                 {splitList.map((x, index) => {
-                    const { time, label } = x;
+                    const { time: splitTime, label } = x;
                     const interval =
-                        index > 0 ? time - splitList[index - 1].time : time;
+                        index > 0
+                            ? splitTime - splitList[index - 1].time
+                            : splitTime;
                     const splitTimeStamp = splitList[index].timestamp;
-                    latestInterval = interval;
                     return (
-                        <div key={time}>
+                        <div key={index}>
                             {splitList.length === 1 ? (
                                 <div></div>
                             ) : (
@@ -270,10 +269,10 @@ function App() {
                                         type="text"
                                         className="label-input"
                                         name="label"
-                                        value={splitList.label}
+                                        value={x.label}
                                         placeholder={handlePlaceholderChange(
                                             index,
-                                            splitList[index].label
+                                            label
                                         )}
                                         onChange={(e) =>
                                             handleLabelChange(index, e)
@@ -283,12 +282,13 @@ function App() {
                                         {formatTime(interval)}
                                     </div>
                                     <div className="total-time">
-                                        {formatTime(time)}
+                                        {formatTime(splitTime)}
                                     </div>
                                     <div className="split-date">
                                         {splitTimeStamp}
                                     </div>
                                     <button
+                                        type="button"
                                         className={
                                             index === 0
                                                 ? "button-hidden"
@@ -309,13 +309,13 @@ function App() {
                     );
                 })}
                 <button
-                    type="submit-button"
+                    type="button"
                     disabled={reset || !paused}
                     onClick={handleExportSubmit}
                 >
                     export
                 </button>
-              <div className="split-item" style={{ position: "relative", top: 20}}>
+                <div className="split-item" style={{ position: "relative", top: 20 }}>
                     Total labeled time: {formatTime(total)}
                 </div>
             </form>
