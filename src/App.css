@@ -145,3 +145,8 @@
   margin-left: 10px;
   margin-right: 10px;
 }
+
+.total-labeled-time {
+  position: relative;
+  top: 20px;
+}

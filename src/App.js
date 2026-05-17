@@ -100,7 +100,11 @@ function App() {
     });
 
     useEffect(() => {
-        window.onbeforeunload = () => "show warning";
+        const handleBeforeUnload = () => "show warning";
+        window.onbeforeunload = handleBeforeUnload;
+        return () => {
+            window.onbeforeunload = null;
+        };
     }, []);
 
     const handleExportSubmit = (e) => {
@@ -315,7 +319,7 @@ function App() {
                 >
                     export
                 </button>
-                <div className="split-item" style={{ position: "relative", top: 20 }}>
+                <div className="split-item total-labeled-time">
                     Total labeled time: {formatTime(total)}
                 </div>
             </form>
